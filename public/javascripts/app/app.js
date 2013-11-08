@@ -5,6 +5,10 @@ function initialize(){
   $('html').on('keydown', keyHandler);
 }
 
+//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
+//-----HANDLERS---------------------------------------------------------------------------
+
 function keyHandler(e) {
   var keyCode = e.which;
   var key = String.fromCharCode(keyCode);
@@ -14,31 +18,92 @@ function keyHandler(e) {
   // to determine new position
   switch (key.toUpperCase()) {
   case 'Q': // Up/Left
-    sendMove(-1, -1);
+    sendMove(e, -1, -1);
     break;
   case 'W': // Up
-    sendMove(0, -1);
+    sendMove(e, 0, -1);
     break;
   case 'E': // Up/Right
-    sendMove(1, -1);
+    sendMove(e, 1, -1);
     break;
   case 'A': // Left
-    sendMove(-1, 0);
+    sendMove(e, -1, 0);
     break;
   case 'D': // Right
-    sendMove(1, 0);
+    sendMove(e, 1, 0);
     break;
   case 'Z': // Down/Left
-    sendMove(-1, 1);
+    sendMove(e, -1, 1);
     break;
   case 'X': // Down
-    sendMove(0, 1);
+    sendMove(e, 0, 1);
     break;
   case 'C': // Down/Right
-    sendMove(1, 1);
+    sendMove(e, 1, 1);
   }
 }
 
-function sendMove(x, y) {
+//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
+//-----MAIN-FUNCTIONS---------------------------------------------------------------------
 
+
+function sendMove(event, x, y) {
+  var position = { x: x, y: y };
+
+  sendGenericAjaxRequest('/', position, 'POST', 'PUT', event, updateBoard);
+}
+
+//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
+//------HTML-FUNCTIONS--------------------------------------------------------------------
+
+function updateBoard(data) {
+  // Gets called when server responds to sendMove
+  console.log(data);
+}
+
+
+//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
+//------AJAX-FUNCTIONS--------------------------------------------------------------------
+
+function submitAjaxForm(event, form, fn) {
+  // debugger;
+  console.log(event);
+  console.log(form);
+  var url = $(form).attr('action');
+  var data = $(form).serialize();
+
+  var options = {};
+  options.url = url;
+  options.type = 'POST';
+  options.data = data;
+  console.log('data = ' + options.data);
+  options.success = function(data, status, jqXHR){
+    console.log('success');
+    fn(data, form);
+  };
+  options.error = function(jqXHR, status, error){
+    console.log(error);
+  };
+  $.ajax(options);
+
+  event.preventDefault();
+
+}
+
+function sendGenericAjaxRequest(url, data, verb, altVerb, event, fn){
+  var options = {};
+  options.url = url;
+  options.type = verb;
+  options.data = data;
+  options.success = function(data, status, jqXHR){
+    fn(data);
+  };
+  options.error = function(jqXHR, status, error){console.log(error);};
+
+  if(altVerb) options.data._method = altVerb;
+  $.ajax(options);
+  if(event) event.preventDefault();
 }
