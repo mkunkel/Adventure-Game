@@ -1,3 +1,7 @@
+var mongoose = require('mongoose');
+var Game = mongoose.model('Game');
+var _ = require('lodash');
+
 var colors = require('colors');
 // Colors
 // bold, italic, underline, inverse, yellow, cyan,
@@ -12,16 +16,12 @@ exports.index = function(req, res){
 
 // POST /
 exports.create = function(req, res){
-  console.log('game.create'.italic.underline.bold.green);
-  console.log('req.body.playerName');
-  console.log(req.body.playerName);
-  console.log('req.body.columns');
-  console.log(req.body.columns);
-  console.log('req.body.rows');
-  console.log(req.body.rows);
-  res.send({ playerName: req.body.playerName});
+  // req.body is { playerName: 'Tommy', columns: '4', rows: '8' }
   //Need to create and save a new game in database
-  //in callback pass the game object back to the browser
+  new Game(req.body).save(function(err, game){
+    //in callback pass the game object back to the browser
+    res.send(game);
+  });
 };
 
 // PUT /
