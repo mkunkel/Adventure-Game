@@ -34,6 +34,8 @@ if ('development' == app.get('env')) {
 
 // route definitions
 app.get('/', game.index);
+app.post('/', game.create);
+app.put('/:position', game.move); // position should be sent as object like {x:1, y:1}
 
 // start server
 http.createServer(app).listen(app.get('port'), function(){
