@@ -3,11 +3,19 @@ $(document).ready(initialize);
 function initialize(){
   $(document).foundation();
   $('html').on('keydown', keyHandler);
+  $('form#newGameForm').on('submit', startNewGame);
 }
 
 //----------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------
 //-----HANDLERS---------------------------------------------------------------------------
+
+function startNewGame(e){
+  // this is the form that posted
+  submitAjaxForm(e, this, function(data, form){
+    console.log(data);
+  });
+}
 
 function keyHandler(e) {
   var keyCode = e.which;
