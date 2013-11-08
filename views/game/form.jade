@@ -1,0 +1,17 @@
+include ../mixins/form-helper
+
+form#newGameForm(action='/' method='post')
+  fieldset
+    legend New Game
+    .row
+      mixin field(12, 'playerName', 'Name', null, 'Bob', true)
+    .row
+      mixin field(4, 'columns', 'Columns', null, '4', true)
+      mixin field(4, 'rows', 'Rows', null, '4', true)
+      .small-4.columns
+    .row
+      .small.4.columns
+        button.radius.success.small.expand(type='submit') Start
+      .small-8.columns
+
+

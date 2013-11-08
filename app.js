@@ -1,3 +1,8 @@
+//initialize data models
+require('./models/game.js');
+require('./models/person.js');
+require('./models/piece.js');
+
 // express application
 var game = require('./routes/game');
 
@@ -6,7 +11,9 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var less = require('express-less');
+var mongoose = require('mongoose');
 var app = express();
+mongoose.connect('mongodb://localhost/adventureGame');
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -27,6 +34,8 @@ if ('development' == app.get('env')) {
 
 // route definitions
 app.get('/', game.index);
+app.post('/', game.create);
+app.put('/', game.move); // position should be sent as object like {x:1, y:1}
 
 // start server
 http.createServer(app).listen(app.get('port'), function(){
