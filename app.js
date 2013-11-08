@@ -1,5 +1,5 @@
 // express application
-var home = require('./routes/home');
+var game = require('./routes/game');
 
 // modules
 var express = require('express');
@@ -26,7 +26,7 @@ if ('development' == app.get('env')) {
 }
 
 // route definitions
-app.get('/', home.index);
+app.get('/', game.index);
 
 // start server
 http.createServer(app).listen(app.get('port'), function(){
