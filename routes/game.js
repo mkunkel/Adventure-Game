@@ -42,14 +42,20 @@ exports.move = function(req, res){
 
 function checkCollisions(x, y, gameId) {
   var collisions = [];
-  Game.findById(gameId).populate('movingPieces').exec(function(err, game){
+  Game.findById(gameId).populate('movingPieces').populate('stationaryPieces').exec(function(err, game){
     for (var i = 0; i < game.movingPieces.length; i++) {
       if (game.movingPieces[i].position.x === x && game.movingPieces[i].position.y === y) {
         collisions.push(game.movingPieces[i]);
       }
+
       if (game.stationaryPieces[i].position.x === x && game.stationaryPieces[i].position.y === y) {
         collisions.push(game.stationaryPieces[i]);
       }
     }
+    Person.findById(game.person, function(err, person) {
+      for (var n = 0; n < collisions.length; n++) {
+        person.health += collisions[n].effect;
+      }
+    });
   });
 }
