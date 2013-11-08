@@ -74,9 +74,9 @@ for(var i = 0; i < game.rows; i++){
 
 
 function sendMove(event, x, y) {
-  var position = { x: x, y: y };
+  var data = { x: x, y: y, gameId: null, personID: null };
 
-  sendGenericAjaxRequest('/', position, 'POST', 'PUT', event, updateBoard);
+  sendGenericAjaxRequest('/', data, 'POST', 'PUT', event, updateBoard);
 }
 
 //----------------------------------------------------------------------------------------
