@@ -15,7 +15,8 @@ exports.create = function(req, res){
   console.log('game.create'.italic.underline.bold.green);
 };
 
-// PUT /:position
+// PUT /
 exports.move = function(req, res){
   console.log('game.move'.italic.underline.bold.yellow);
+  res.send(req.body); // req.body contains {x:n, y:n}, where n is -1, 0, or 1
 };

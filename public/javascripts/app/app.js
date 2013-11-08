@@ -18,28 +18,28 @@ function keyHandler(e) {
   // to determine new position
   switch (key.toUpperCase()) {
   case 'Q': // Up/Left
-    sendMove(-1, -1);
+    sendMove(e, -1, -1);
     break;
   case 'W': // Up
-    sendMove(0, -1);
+    sendMove(e, 0, -1);
     break;
   case 'E': // Up/Right
-    sendMove(1, -1);
+    sendMove(e, 1, -1);
     break;
   case 'A': // Left
-    sendMove(-1, 0);
+    sendMove(e, -1, 0);
     break;
   case 'D': // Right
-    sendMove(1, 0);
+    sendMove(e, 1, 0);
     break;
   case 'Z': // Down/Left
-    sendMove(-1, 1);
+    sendMove(e, -1, 1);
     break;
   case 'X': // Down
-    sendMove(0, 1);
+    sendMove(e, 0, 1);
     break;
   case 'C': // Down/Right
-    sendMove(1, 1);
+    sendMove(e, 1, 1);
   }
 }
 
@@ -48,14 +48,20 @@ function keyHandler(e) {
 //-----MAIN-FUNCTIONS---------------------------------------------------------------------
 
 
-function sendMove(x, y) {
+function sendMove(event, x, y) {
+  var position = { x: x, y: y };
 
+  sendGenericAjaxRequest('/', position, 'POST', 'PUT', event, updateBoard);
 }
 
 //----------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------
 //------HTML-FUNCTIONS--------------------------------------------------------------------
 
+function updateBoard(data) {
+  // Gets called when server responds to sendMove
+  console.log(data);
+}
 
 
 //----------------------------------------------------------------------------------------
@@ -87,13 +93,13 @@ function submitAjaxForm(event, form, fn) {
 
 }
 
-function sendGenericAjaxRequest(url, data, verb, altVerb, event, fn, form){
+function sendGenericAjaxRequest(url, data, verb, altVerb, event, fn){
   var options = {};
   options.url = url;
   options.type = verb;
   options.data = data;
   options.success = function(data, status, jqXHR){
-    fn(data, form);
+    fn(data);
   };
   options.error = function(jqXHR, status, error){console.log(error);};
 
