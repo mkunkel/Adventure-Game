@@ -61,7 +61,7 @@ game.rows = 4;//game.rows;
 game.stationaryPieces = [{type: 'princess', position: {x: 1, y: 2}}, {type: 'treasure', position: {x: 2, y: 3}}, {type: 'exit', position: {x: 3, y: 4}}];
 game.movingPieces = [{type: 'death', position: {x: 1, y: 1}}, {type: 'ghost', position: {x: 2, y: 2}}, {type: 'wormhole', position: {x: 3, y: 3}}];
 game.person = {};
-game.person.position = {x: 1, y: 1};
+game.person.position = {x: 3, y: 1};
 buildGameBoard();
 //#gameBoard
 
@@ -76,15 +76,28 @@ function buildGameBoard(){
       $($tr).append($td);
     }
     $('#gameBoard').append($tr);
-    htmlUpdatePieces();
   }
+  htmlUpdatePieces();
 }
 
-//game.person.position = {x: 1, y: 1};
 function htmlUpdatePieces(){
+  //affix person to board:
   var $square = $('tr[data-y="' + game.person.position.y + '"] td[data-x="' + game.person.position.x + '"]');
   var $person = $('<img class="piece" src="../images/person.png"/>');
   $square.append($person);
+  //affix moving pieces to board:
+  for(var i = 0; i < game.movingPieces.length; i++){
+    var $square = $('tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]');
+    var $piece = $('<img class="piece" src="../images/'+ game.movingPieces[i].type +'.png"/>');
+    $square.append($piece);
+  };
+  //affix stationary pieces to board:
+  for(var i = 0; i < game.stationaryPieces.length; i++){
+    var $square = $('tr[data-y="' + game.stationaryPieces[i].position.y + '"] td[data-x="' + game.stationaryPieces[i].position.x + '"]');
+    var $piece = $('<img src="../images/' + game.stationaryPieces[i].type +'.png"/>').addClass('piece');
+    $square.append($piece);
+  };
+
 }
 //---------------------------------------------------------------//
 //---------------------------------------------------------------//
