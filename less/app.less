@@ -1,17 +1,27 @@
-@base: #ffffff;
+@import url(http://fonts.googleapis.com/css?family=MedievalSharp);
+@base: #54b700;
 
 
 body{
+  background: url('../images/back.jpg') no-repeat;
   background-color: @base;
+}
+
+h1{
+ font-family: 'MedievalSharp', cursive;
+ color: blue;
+ font-size: 60px;
 }
 
 #gameBoard{
   height: auto;
+  background-color: rgba(255, 255, 255, 0.2) !important;
   tr{
     height: 100px;
+    background-color: transparent;
     td{
       width: 100px;
-      border: 1px solid black;
+      border: 1px solid white;
     }
   }
 }
@@ -21,7 +31,7 @@ body{
   background-repeat: no-repeat;
 }
 
-@-webkit-keyframes rotate {
+@-webkit-keyframes wormhole {
   from {
     -webkit-transform: rotate(0deg);
   }
@@ -30,10 +40,25 @@ body{
   }
 }
 
-.wormhole
-{
-    -webkit-animation-name:             rotate;
+@-webkit-keyframes ghost {
+  0% {-webkit-transform: scale(0.9) rotate(8deg)}
+  25% {-webkit-transform: scale(0.95) rotate(0deg)}
+  50% {-webkit-transform: scale(1.0) rotate(-8deg)}
+  75% {-webkit-transform: scale(0.95) rotate(0deg)}
+  100% {-webkit-transform: scale(0.9) rotate(8deg)}
+
+}
+
+.wormhole {
+    -webkit-animation-name:             wormhole;
     -webkit-animation-duration:         5s;
     -webkit-animation-iteration-count:  infinite;
     -webkit-animation-timing-function:  linear;
-    }
+}
+
+.ghost {
+    -webkit-animation-name:             ghost;
+    -webkit-animation-duration:         3s;
+    -webkit-animation-iteration-count:  infinite;
+    -webkit-animation-timing-function:  linear;
+}

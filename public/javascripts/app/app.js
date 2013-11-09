@@ -86,6 +86,7 @@ function htmlUpdatePieces(){
   var $square = $('tr[data-y="' + game.person.position.y + '"] td[data-x="' + game.person.position.x + '"]');
   var $person = $('<img class="piece" src="../images/person.png"/>');
   $square.append($person);
+
   //affix moving pieces to board:
   for(var i = 0; i < game.movingPieces.length; i++){
     var $square = $('tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]');
@@ -97,11 +98,10 @@ function htmlUpdatePieces(){
   for(var i = 0; i < game.stationaryPieces.length; i++){
     var $square = $('tr[data-y="' + game.stationaryPieces[i].position.y + '"] td[data-x="' + game.stationaryPieces[i].position.x + '"]');
     var $piece = $('<img src="../images/' + game.stationaryPieces[i].type +'.png"/>').addClass('piece');
-    if (game.stationaryPieces[i].type != 'princess' && game.stationaryPieces[i].type != 'treasure'){
-      $piece.addClass(game.stationaryPieces[i].type);
-    }
+    $piece.addClass(game.stationaryPieces[i].type);
     $square.append($piece);
   };
+
 }
 //---------------------------------------------------------------//
 //---------------------------------------------------------------//
