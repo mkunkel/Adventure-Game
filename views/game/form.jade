@@ -6,8 +6,9 @@ form#newGameForm(action='/' method='post')
     .row
       mixin field(12, 'playerName', 'Name', null, 'Bob', true)
     .row
-      mixin field(4, 'columns', 'Columns', null, '4')
-      mixin field(4, 'rows', 'Rows', null, '4')
+      mixin field(4, 'columns', 'Columns', null, '4', false)
+      mixin field(4, 'rows', 'Rows', null, '4', false)
+
       .small-4.columns
     .row
       .small.4.columns
