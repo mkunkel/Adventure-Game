@@ -18,6 +18,7 @@ function startNewGame(e){
 }
 
 function keyHandler(e) {
+  if (!$('#newGameForm').is(':hidden')) { return e }
   var keyCode = e.which;
   var key = String.fromCharCode(keyCode);
   // based on direction, sendMove(x, y)
