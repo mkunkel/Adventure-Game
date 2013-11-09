@@ -39,7 +39,8 @@ exports.move = function(req, res){
     game.person.position.x += parseInt(req.body.x, 10);
     game.person.position.y += parseInt(req.body.y, 10);
     console.log('after-' + game.person.position.x + ', ' + game.person.position.y);
-    checkCollisions(game.person.position.x, game.person.position.y, game._id);
+    // checkCollisions(game.person.position.x, game.person.position.y, game._id);
+    game.markModified('person');
     game.save(function(err, saveGame){
       console.log(saveGame);
       res.send(saveGame); // req.body contains {x:n, y:n, id:___}, where n is -1, 0, or 1
