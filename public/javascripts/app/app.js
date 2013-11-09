@@ -22,11 +22,19 @@ function keyHandler(e) {
   var key = String.fromCharCode(keyCode);
   console.log(key);
 }
+
+
+//---------------------------------------------------------------//
+//---------------dummy variables for building board--------------//
+//---------------------------------------------------------------//
 var game = {};
 game.columns = 5;//game.columns;
 game.rows = 6;//game.rows;
 //#gameBoard
 
+//---------------------------------------------------------------//
+//-----------uncomment 'function' when model is ready------------//
+//---------------------------------------------------------------//
 //function buildGameBoard(game.columns, game.rows){
 for(var i = 0; i < game.rows; i++){
   var $tr = $('<tr></tr>').attr('data-y', i);
@@ -35,9 +43,33 @@ for(var i = 0; i < game.rows; i++){
     $($tr).append($td);
   };
   $('#gameBoard').append($tr);
+  htmlUpdatePieces();
 };
+//}
 
-
+function htmlUpdatePieces(){
+  //pseudocode:
+  //need to loop over the pieces array and grab their
+  //co-ordinates and their image filepaths. .piece is used
+  // to size them in CSS
+  var $ghost1 = ('<img class="piece" src="'+ filepath + '"/>');
+  $('#gameBoard' tr(data='y') td(data='x')).append($ghost1);
+  var $player = ('<img class="piece" src="'+ filepath + '"/>');
+  $('#gameBoard' tr(data='y') td(data='x')).append($player);
+  var $princess = ('<img class="piece" src="'+ filepath + '"/>');
+  $('#gameBoard' tr(data='y') td(data='x')).append($princess);
+  var $exit = ('<img class="piece" src="'+ filepath + '"/>');
+  $('#gameBoard' tr(data='y') td(data='x')).append($exit);
+  var $wormhole = ('<img class="piece" src="'+ filepath + '"/>');
+  $('#gameBoard' tr(data='y') td(data='x')).append($wormhole);
+  var $death = ('<img class="piece" src="'+ filepath + '"/>');
+  $('#gameBoard' tr(data='y') td(data='x')).append($death);
+  var $treasure = ('<img class="piece" src="'+ filepath + '"/>');
+  $('#gameBoard' tr(data='y') td(data='x')).append($treasure);
+}
+//---------------------------------------------------------------//
+//---------------------------------------------------------------//
+//---------------------------------------------------------------//
   // based on direction, sendMove(x, y)
   // on server, add these coords to current position
   // to determine new position

@@ -29,7 +29,7 @@ exports.create = function(req, res){
   });
 };
 
-// PUT /
+PUT /
 exports.move = function(req, res){
   console.log('game.move'.italic.underline.bold.yellow);
 
@@ -43,7 +43,7 @@ exports.move = function(req, res){
     checkCollisions(person.position.x, person.position.y, gameId);
   });
 
-};
+}
 
 function checkCollisions(x, y, gameId) {
   var collisions = [];
@@ -58,4 +58,3 @@ function checkCollisions(x, y, gameId) {
     }
   });
 }
-

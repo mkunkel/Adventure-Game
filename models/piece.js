@@ -5,6 +5,9 @@ var Piece = mongoose.Schema({
   type: String,
   //later i.e. position.x ... position.y
   position: {}
+  //********************************************
+  //should we add 'image: String' for the file path to the .png?
+  //********************************************
 });
 
 mongoose.model('Piece', Piece);
