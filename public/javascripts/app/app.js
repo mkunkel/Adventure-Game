@@ -18,6 +18,7 @@ function startNewGame(e){
 }
 
 function keyHandler(e) {
+  if (!$('#newGameForm').is(':hidden')) { return e }
   var keyCode = e.which;
   var key = String.fromCharCode(keyCode);
   // based on direction, sendMove(x, y)
@@ -89,12 +90,16 @@ function htmlUpdatePieces(){
   for(var i = 0; i < game.movingPieces.length; i++){
     var $square = $('tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]');
     var $piece = $('<img class="piece" src="../images/'+ game.movingPieces[i].type +'.png"/>');
+    $piece.addClass(game.movingPieces[i].type);
     $square.append($piece);
   };
   //affix stationary pieces to board:
   for(var i = 0; i < game.stationaryPieces.length; i++){
     var $square = $('tr[data-y="' + game.stationaryPieces[i].position.y + '"] td[data-x="' + game.stationaryPieces[i].position.x + '"]');
     var $piece = $('<img src="../images/' + game.stationaryPieces[i].type +'.png"/>').addClass('piece');
+    if (game.stationaryPieces[i].type != 'princess' && game.stationaryPieces[i].type != 'treasure'){
+      $piece.addClass(game.stationaryPieces[i].type);
+    }
     $square.append($piece);
   };
 }
