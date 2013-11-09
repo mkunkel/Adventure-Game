@@ -35,7 +35,7 @@ exports.move = function(req, res){
   Game.findById(req.body.id, function(err, game) {
     game.person.position.x += req.body.x;
     game.person.position.y += req.body.y;
-    checkCollisions(game.person.position.x, game.person.position.y, id);
+    checkCollisions(game.person.position.x, game.person.position.y, game._id);
     game.save();
     res.send(game); // req.body contains {x:n, y:n, id:___}, where n is -1, 0, or 1
   });
@@ -49,9 +49,11 @@ function checkCollisions(x, y, gameId) {
       if (game.movingPieces[i].position.x === x && game.movingPieces[i].position.y === y) {
         collisions.push(game.movingPieces[i]);
       }
+    }
 
-      if (game.stationaryPieces[i].position.x === x && game.stationaryPieces[i].position.y === y) {
-        collisions.push(game.stationaryPieces[i]);
+    for (var a = 0; a < game.stationaryPieces.length; a++) {
+      if (game.stationaryPieces[a].position.x === x && game.stationaryPieces[a].position.y === y) {
+        collisions.push(game.stationaryPieces[a]);
       }
     }
     for (var n = 0; n < collisions.length; n++) {

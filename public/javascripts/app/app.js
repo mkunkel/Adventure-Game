@@ -66,7 +66,7 @@ function buildGameBoard(game){
       var $td = $('<td></td>').attr('data-x', a);
       $($tr).append($td);
     }
-    $('#gameBoard').append($tr);
+    $('#gameBoard').append($tr).data('id', game._id);
   }
   htmlPlacePieces(game);
 }
@@ -74,7 +74,7 @@ function buildGameBoard(game){
 function htmlPlacePieces(game){
   //affix person to board:
   var $square = $('tr[data-y="' + game.person.position.y + '"] td[data-x="' + game.person.position.x + '"]');
-  var $person = $('<img class="piece" src="../images/person.png"/>');
+  var $person = $('<img class="piece" id="person" src="../images/person.png"/>');
   $square.append($person);
 
   //affix moving pieces to board:
@@ -94,7 +94,10 @@ function htmlPlacePieces(game){
 }
 
 function htmlUpdatePieces(game) {
-
+  $('#person').detach().append('tr[data-y="' + game.person.position.y + '"] td[data-x="' + game.person.position.x + '"]')
+  for (var i = 0; i < game.movingPieces.length; i++) {
+    $(game.movingPieces[i].type).detach().append('tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]');
+  }
 }
 
 //---------------------------------------------------------------//
@@ -107,7 +110,7 @@ function htmlUpdatePieces(game) {
 
 
 function sendMove(event, x, y) {
-  var data = { x: x, y: y, id: null};
+  var data = { x: x, y: y, id: $('#gameBoard').data('id')};
 
   sendGenericAjaxRequest('/', data, 'POST', 'PUT', event, htmlUpdatePieces);
 }
