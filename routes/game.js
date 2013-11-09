@@ -24,8 +24,6 @@ exports.create = function(req, res){
   new Game(req.body).save(function(err, game){
     //in callback pass the game object back to the browser
     game = hidePrincessAndGold(game);
-    console.log("Game before res.send");
-    console.log(game);
     res.send(game);
   });
 };
@@ -36,8 +34,11 @@ exports.move = function(req, res){
 
 
   Game.findById(req.body.id, function(err, game) {
-    game.person.position.x += req.body.x;
-    game.person.position.y += req.body.y;
+    console.log('before-' + game.person.position.x + ', ' + game.person.position.y);
+    console.log(req.body.x + ', ' + req.body.y);
+    game.person.position.x += parseInt(req.body.x, 10);
+    game.person.position.y += parseInt(req.body.y, 10);
+    console.log('after-' + game.person.position.x + ', ' + game.person.position.y);
     checkCollisions(game.person.position.x, game.person.position.y, game._id);
     game.save();
     res.send(game); // req.body contains {x:n, y:n, id:___}, where n is -1, 0, or 1

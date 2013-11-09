@@ -13,8 +13,6 @@ function initialize(){
 function startNewGame(e){
   // this is the form that posted
   submitAjaxForm(e, this, function(data, form){
-    console.log("GAME returning from startNewGame");
-    console.log(data);
     $('#formColumn').hide().removeClass('small-3');
     $('#headColumn').addClass('small-12').removeClass('small-9');
     buildGameBoard(data);
@@ -95,7 +93,9 @@ function htmlPlacePieces(game){
 }
 
 function htmlUpdatePieces(game) {
-  $('#person').detach().append('tr[data-y="' + game.person.position.y + '"] td[data-x="' + game.person.position.x + '"]')
+  console.log(game);
+  var $person = $('#person').detach();
+  $('tr[data-y="' + game.person.position.y + '"] td[data-x="' + game.person.position.x + '"]').append($person);
   for (var i = 0; i < game.movingPieces.length; i++) {
     $(game.movingPieces[i].type).detach().append('tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]');
   }
