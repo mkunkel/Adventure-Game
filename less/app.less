@@ -15,13 +15,18 @@ h1{
 
 #gameBoard{
   height: auto;
-  background-color: rgba(255, 255, 255, 0.2) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border: none;
   tr{
     height: 100px;
     background-color: transparent;
     td{
       width: 100px;
-      border: 1px solid white;
+      -moz-box-shadow: inset 5px 3px 15px @base - #222222;
+      -webkit-box-shadow: inset 5px 3px 15px @base - #222222;
+      box-shadow: inset 5px 3px 15px @base - #222222;
+      filter: progid:DXImageTransform.Microsoft.Shadow(strength = 5, direction = 117, color = '#000000');
+      -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(strength = 5, Direction = 117, Color = '#000000')";
     }
   }
 }
