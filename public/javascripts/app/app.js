@@ -77,8 +77,8 @@ function buildGameBoard(){
       $($tr).append($td);
     }
     $('#gameBoard').append($tr);
-    htmlUpdatePieces();
   }
+  htmlUpdatePieces();
 }
 
 //game.person.position = {x: 1, y: 1};
