@@ -11,7 +11,7 @@ var Game = mongoose.Schema({
   movingPieces    : [{}],
   stationaryPieces: [{}],
   foundPrincess   : {type: Boolean, default: false},
-  foundGold       : {type: Boolean, default: false},
+  foundTreasure   : {type: Boolean, default: false},
   gameOver        : {type: Boolean, default: false},
   didWin          : Boolean
 });

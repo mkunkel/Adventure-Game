@@ -13,6 +13,7 @@ function initialize(){
 function startNewGame(e){
   // this is the form that posted
   submitAjaxForm(e, this, function(data, form){
+    console.log("GAME returning from startNewGame");
     console.log(data);
     $('form#newGameForm').hide();
     buildGameBoard(data);
