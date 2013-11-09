@@ -7,7 +7,7 @@ var Game = mongoose.Schema({
   playerName      : String,
   rows            : Number,
   columns         : Number,
-  person          : [{}],
+  person          : {},
   movingPieces    : [{}],
   stationaryPieces: [{}],
   foundPrincess   : {type: Boolean, default: false},
@@ -16,24 +16,53 @@ var Game = mongoose.Schema({
   didWin          : Boolean
 });
 
-
 Game.pre('save', function(next){
-  //initializes the movingPieces and stationaryPieces
+  //initializes person, movingPieces, and stationaryPieces.
   // the if conditions below ensure that these arrays are only created
   // when the game is FIRST saved (i.e. first created).
-  if(!this.stationaryPieces.length){
-    // create the stationaryPieces array.
-    // e.g. this.stationaryPieces = ...
-    // var test = new Piece
+  var columns = this.columns;
+  var rows = this.rows;
+  var allBoardSquaresArray = createAllBoardSquaresArray(columns, rows);
+
+  if(_.isEmpty(this.person)){
+    this.person = {};
+    this.person.health = columns * rows;
+    this.person.position = {};
+    this.person.position.x = allBoardSquaresArray[0][0];
+    this.person.position.y = allBoardSquaresArray[0][1];
   }
 
-  // if(!this.movingPieces.length){
-  //   this.board = _.range(this.size).concat(_.range(this.size));
-  //   this.board = _.shuffle(this.board);
-  //   this.board = _.map(this.board, function(n){return {match: false, value: n};});
-  // }
+  if(!this.stationaryPieces.length){
+    var exit = {type: 'exit', position: {x: allBoardSquaresArray[1][0], y: allBoardSquaresArray[1][1]}};
+    var princess = {type: 'princess', position: {x: allBoardSquaresArray[2][0], y: allBoardSquaresArray[2][1]}};
+    var gold = {type: 'gold', position: {x: allBoardSquaresArray[3][0], y: allBoardSquaresArray[3][1]}};
+    this.stationaryPieces.push(exit, princess, gold);
+  }
+
+  if(!this.movingPieces.length){
+    var death = {type: 'death', position: {x: allBoardSquaresArray[4][0], y: allBoardSquaresArray[4][1]}};
+    var wormhole1 = {type: 'wormhole', position: {x: allBoardSquaresArray[5][0], y: allBoardSquaresArray[5][1]}};
+    var wormhole2 = {type: 'wormhole', position: {x: allBoardSquaresArray[6][0], y: allBoardSquaresArray[6][1]}};
+    var numberOfGhosts = Math.ceil((rows * columns) / 10);
+    this.movingPieces.push(death, wormhole1, wormhole2);
+    for(var z = 0; z < numberOfGhosts; z++){
+      var ghost = {type: 'ghost', position: {x: allBoardSquaresArray[z+7][0], y: allBoardSquaresArray[z+7][1]}};
+      this.movingPieces.push(ghost);
+    }
+  }
 
   next();
 });
 
 mongoose.model('Game', Game);
+
+function createAllBoardSquaresArray(columns, rows){
+  var squaresArray = [];
+  for(var x = 0; x < columns; x++){
+    for(var y = 0; y < rows; y++){
+      squaresArray.push([x, y]);
+    }
+  }
+  squaresArray = _.shuffle(squaresArray);
+  return squaresArray;
+}

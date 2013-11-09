@@ -5,8 +5,6 @@ var _ = require('lodash');
 var colors = require('colors');
 var mongoose = require('mongoose');
 var Game = mongoose.model('Game');
-var Person = mongoose.model('Person');
-var Piece = mongoose.model('Piece');
 // Colors
 // bold, italic, underline, inverse, yellow, cyan,
 // white, magenta, green, red, grey, blue, rainbow,
