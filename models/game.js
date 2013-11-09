@@ -11,7 +11,7 @@ var Game = mongoose.Schema({
   movingPieces    : [{}],
   stationaryPieces: [{}],
   foundPrincess   : {type: Boolean, default: false},
-  foundGold       : {type: Boolean, default: false},
+  foundTreasure   : {type: Boolean, default: false},
   gameOver        : {type: Boolean, default: false},
   didWin          : Boolean
 });
@@ -35,8 +35,8 @@ Game.pre('save', function(next){
   if(!this.stationaryPieces.length){
     var exit = {type: 'exit', position: {x: allBoardSquaresArray[1][0], y: allBoardSquaresArray[1][1]}};
     var princess = {type: 'princess', position: {x: allBoardSquaresArray[2][0], y: allBoardSquaresArray[2][1]}};
-    var gold = {type: 'treasure', position: {x: allBoardSquaresArray[3][0], y: allBoardSquaresArray[3][1]}};
-    this.stationaryPieces.push(exit, princess, gold);
+    var treasure = {type: 'treasure', position: {x: allBoardSquaresArray[3][0], y: allBoardSquaresArray[3][1]}};
+    this.stationaryPieces.push(exit, princess, treasure);
   }
 
   if(!this.movingPieces.length){
