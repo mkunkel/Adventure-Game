@@ -14,6 +14,8 @@ function startNewGame(e){
   // this is the form that posted
   submitAjaxForm(e, this, function(data, form){
     console.log(data);
+    $('form#newGameForm').hide();
+    buildGameBoard(data);
   });
 }
 
@@ -56,20 +58,20 @@ function keyHandler(e) {
 //---------------------------------------------------------------//
 //---------------dummy variables for building board--------------//
 //---------------------------------------------------------------//
-var game = {};
-game.columns = 4;//game.columns;
-game.rows = 4;//game.rows;
-game.stationaryPieces = [{type: 'princess', position: {x: 1, y: 2}}, {type: 'treasure', position: {x: 2, y: 3}}, {type: 'exit', position: {x: 1, y: 4}}];
-game.movingPieces = [{type: 'death', position: {x: 1, y: 1}}, {type: 'ghost', position: {x: 2, y: 2}}, {type: 'wormhole', position: {x: 3, y: 3}}];
-game.person = {};
-game.person.position = {x: 3, y: 1};
-buildGameBoard();
+// var game = {};
+// game.columns = 4;//game.columns;
+// game.rows = 4;//game.rows;
+// game.stationaryPieces = [{type: 'princess', position: {x: 1, y: 2}}, {type: 'treasure', position: {x: 2, y: 3}}, {type: 'exit', position: {x: 1, y: 4}}];
+// game.movingPieces = [{type: 'death', position: {x: 1, y: 1}}, {type: 'ghost', position: {x: 2, y: 2}}, {type: 'wormhole', position: {x: 3, y: 3}}];
+// game.person = {};
+// game.person.position = {x: 3, y: 1};
+// buildGameBoard();
 //#gameBoard
 
 //---------------------------------------------------------------//
 //-----------uncomment 'function' when model is ready------------//
 //---------------------------------------------------------------//
-function buildGameBoard(){
+function buildGameBoard(game){
   for(var i = 0; i < game.rows; i++){
     var $tr = $('<tr></tr>').attr('data-y', i);
     for(var a = 0; a < game.columns; a++){
@@ -78,10 +80,10 @@ function buildGameBoard(){
     }
     $('#gameBoard').append($tr);
   }
-  htmlUpdatePieces();
+  htmlUpdatePieces(game);
 }
 
-function htmlUpdatePieces(){
+function htmlUpdatePieces(game){
   //affix person to board:
   var $square = $('tr[data-y="' + game.person.position.y + '"] td[data-x="' + game.person.position.x + '"]');
   var $person = $('<img class="piece" src="../images/person.png"/>');
