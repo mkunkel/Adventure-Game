@@ -1,7 +1,5 @@
 //initialize data models
 require('./models/game.js');
-require('./models/person.js');
-require('./models/piece.js');
 
 // express application
 var game = require('./routes/game');
