@@ -56,8 +56,12 @@ function keyHandler(e) {
 //---------------dummy variables for building board--------------//
 //---------------------------------------------------------------//
 var game = {};
-game.columns = 5;//game.columns;
-game.rows = 6;//game.rows;
+game.columns = 4;//game.columns;
+game.rows = 4;//game.rows;
+game.stationaryPieces = [{type: 'princess', position: {x: 1, y: 2}}, {type: 'treasure', position: {x: 2, y: 3}}, {type: 'exit', position: {x: 3, y: 4}}];
+game.movingPieces = [{type: 'death', position: {x: 1, y: 1}}, {type: 'ghost', position: {x: 2, y: 2}}, {type: 'wormhole', position: {x: 3, y: 3}}];
+game.person = {};
+game.person.position = {x: 1, y: 1};
 buildGameBoard();
 //#gameBoard
 
@@ -72,19 +76,16 @@ function buildGameBoard(){
       $($tr).append($td);
     }
     $('#gameBoard').append($tr);
-    // htmlUpdatePieces();
+    htmlUpdatePieces();
   }
 }
 
-
-// function htmlUpdatePieces(){
-//   //pseudocode:
-//   //need to loop over the pieces array and grab their
-//   //co-ordinates and their image filepaths. .piece is used
-//   // to size them in CSS
-//   var $ghost1 = ('<img class="piece" src="'+ filepath + '"/>');
-//   $('#gameBoard' tr(data='y') td(data='x')).append($ghost1);
-// }
+//game.person.position = {x: 1, y: 1};
+function htmlUpdatePieces(){
+  var $square = $('tr[data-y="' + game.person.position.y + '"] td[data-x="' + game.person.position.x + '"]');
+  var $person = $('<img class="piece" src="../images/person.png"/>');
+  $square.append($person);
+}
 //---------------------------------------------------------------//
 //---------------------------------------------------------------//
 //---------------------------------------------------------------//
