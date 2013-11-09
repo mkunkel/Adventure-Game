@@ -15,7 +15,8 @@ var Piece = mongoose.model('Piece');
 // GET /
 exports.index = function(req, res){
   console.log('game.index'.italic.underline.bold.magenta);
-  res.render('game/index', {title: 'Express'});
+
+  res.render('game/index', {title: 'Game'});
 };
 
 // POST /
@@ -31,6 +32,8 @@ exports.create = function(req, res){
 // PUT /
 exports.move = function(req, res){
   console.log('game.move'.italic.underline.bold.yellow);
+
+
   res.send(req.body); // req.body contains {x:n, y:n, gameId:___, personId:___}, where n is -1, 0, or 1
   Person.findById(req.body.id, function(err, person) {
     person.position.x += req.body.x;
@@ -38,7 +41,7 @@ exports.move = function(req, res){
     checkCollisions(person.position.x, person.position.y, gameId);
   });
 
-};
+}
 
 function checkCollisions(x, y, gameId) {
   var collisions = [];
