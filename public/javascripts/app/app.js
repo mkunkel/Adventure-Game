@@ -18,6 +18,7 @@ function startNewGame(e){
 }
 
 function keyHandler(e) {
+  if (!$('#newGameForm').is(':hidden')) { return e }
   var keyCode = e.which;
   var key = String.fromCharCode(keyCode);
   // based on direction, sendMove(x, y)
@@ -56,8 +57,12 @@ function keyHandler(e) {
 //---------------dummy variables for building board--------------//
 //---------------------------------------------------------------//
 var game = {};
-game.columns = 5;//game.columns;
-game.rows = 6;//game.rows;
+game.columns = 4;//game.columns;
+game.rows = 4;//game.rows;
+game.stationaryPieces = [{type: 'princess', position: {x: 1, y: 2}}, {type: 'treasure', position: {x: 2, y: 3}}, {type: 'exit', position: {x: 3, y: 4}}];
+game.movingPieces = [{type: 'death', position: {x: 1, y: 1}}, {type: 'ghost', position: {x: 2, y: 2}}, {type: 'wormhole', position: {x: 3, y: 3}}];
+game.person = {};
+game.person.position = {x: 3, y: 1};
 buildGameBoard();
 //#gameBoard
 
@@ -72,19 +77,33 @@ function buildGameBoard(){
       $($tr).append($td);
     }
     $('#gameBoard').append($tr);
-    // htmlUpdatePieces();
   }
+  htmlUpdatePieces();
 }
 
+function htmlUpdatePieces(){
+  //affix person to board:
+  var $square = $('tr[data-y="' + game.person.position.y + '"] td[data-x="' + game.person.position.x + '"]');
+  var $person = $('<img class="piece" src="../images/person.png"/>');
+  $square.append($person);
+  //affix moving pieces to board:
+  for(var i = 0; i < game.movingPieces.length; i++){
+    var $square = $('tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]');
+    var $piece = $('<img class="piece" src="../images/'+ game.movingPieces[i].type +'.png"/>');
+    $piece.addClass(game.movingPieces[i].type);
+    $square.append($piece);
+  };
+  //affix stationary pieces to board:
+  for(var i = 0; i < game.stationaryPieces.length; i++){
+    var $square = $('tr[data-y="' + game.stationaryPieces[i].position.y + '"] td[data-x="' + game.stationaryPieces[i].position.x + '"]');
+    var $piece = $('<img src="../images/' + game.stationaryPieces[i].type +'.png"/>').addClass('piece');
+    if (game.stationaryPieces[i].type != 'princess' && game.stationaryPieces[i].type != 'treasure'){
+      $piece.addClass(game.stationaryPieces[i].type);
+    }
+    $square.append($piece);
+  };
 
-// function htmlUpdatePieces(){
-//   //pseudocode:
-//   //need to loop over the pieces array and grab their
-//   //co-ordinates and their image filepaths. .piece is used
-//   // to size them in CSS
-//   var $ghost1 = ('<img class="piece" src="'+ filepath + '"/>');
-//   $('#gameBoard' tr(data='y') td(data='x')).append($ghost1);
-// }
+}
 //---------------------------------------------------------------//
 //---------------------------------------------------------------//
 //---------------------------------------------------------------//

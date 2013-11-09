@@ -18,6 +18,22 @@ body{
 .piece{
   height: 95px;
   width: 95px;
+  background-repeat: no-repeat;
 }
 
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
 
+.wormhole
+{
+    -webkit-animation-name:             rotate;
+    -webkit-animation-duration:         5s;
+    -webkit-animation-iteration-count:  infinite;
+    -webkit-animation-timing-function:  linear;
+    }
