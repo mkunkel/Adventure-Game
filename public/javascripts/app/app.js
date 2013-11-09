@@ -20,45 +20,6 @@ function startNewGame(e){
 function keyHandler(e) {
   var keyCode = e.which;
   var key = String.fromCharCode(keyCode);
-  console.log(key);
-}
-
-
-//---------------------------------------------------------------//
-//---------------dummy variables for building board--------------//
-//---------------------------------------------------------------//
-var game = {};
-game.columns = 5;//game.columns;
-game.rows = 6;//game.rows;
-//#gameBoard
-
-//---------------------------------------------------------------//
-//-----------uncomment 'function' when model is ready------------//
-//---------------------------------------------------------------//
-//function buildGameBoard(game.columns, game.rows){
-for(var i = 0; i < game.rows; i++){
-  var $tr = $('<tr></tr>').attr('data-y', i);
-  for(var a = 0; a < game.columns; a++){
-    var $td = $('<td></td>').attr('data-x', a);
-    $($tr).append($td);
-  };
-  $('#gameBoard').append($tr);
-  //htmlUpdatePieces();
-};
-//}
-
-// function htmlUpdatePieces(){
-//   //pseudocode:
-//   //need to loop over the pieces array and grab their
-//   //co-ordinates and their image filepaths. .piece is used
-//   // to size them in CSS
-//   var $ghost1 = ('<img class="piece" src="'+ filepath + '"/>');
-//   $('#gameBoard' tr(data='y') td(data='x')).append($ghost1);
-
-// }
-//---------------------------------------------------------------//
-//---------------------------------------------------------------//
-//---------------------------------------------------------------//
   // based on direction, sendMove(x, y)
   // on server, add these coords to current position
   // to determine new position
@@ -87,7 +48,46 @@ for(var i = 0; i < game.rows; i++){
   case 'C': // Down/Right
     sendMove(e, 1, 1);
   }
+  // console.log(key);
 }
+
+
+//---------------------------------------------------------------//
+//---------------dummy variables for building board--------------//
+//---------------------------------------------------------------//
+var game = {};
+game.columns = 5;//game.columns;
+game.rows = 6;//game.rows;
+buildGameBoard();
+//#gameBoard
+
+//---------------------------------------------------------------//
+//-----------uncomment 'function' when model is ready------------//
+//---------------------------------------------------------------//
+function buildGameBoard(){
+  for(var i = 0; i < game.rows; i++){
+    var $tr = $('<tr></tr>').attr('data-y', i);
+    for(var a = 0; a < game.columns; a++){
+      var $td = $('<td></td>').attr('data-x', a);
+      $($tr).append($td);
+    }
+    $('#gameBoard').append($tr);
+    // htmlUpdatePieces();
+  }
+}
+
+
+// function htmlUpdatePieces(){
+//   //pseudocode:
+//   //need to loop over the pieces array and grab their
+//   //co-ordinates and their image filepaths. .piece is used
+//   // to size them in CSS
+//   var $ghost1 = ('<img class="piece" src="'+ filepath + '"/>');
+//   $('#gameBoard' tr(data='y') td(data='x')).append($ghost1);
+// }
+//---------------------------------------------------------------//
+//---------------------------------------------------------------//
+//---------------------------------------------------------------//
 
 //----------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------
