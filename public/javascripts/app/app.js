@@ -14,7 +14,8 @@ function startNewGame(e){
   // this is the form that posted
   submitAjaxForm(e, this, function(data, form){
     console.log(data);
-    $('form#newGameForm').hide();
+    $('#formColumn').hide().removeClass('small-3');
+    $('#headColumn').addClass('small-12').removeClass('small-9');
     buildGameBoard(data);
   });
 }
@@ -117,7 +118,7 @@ function htmlUpdatePieces(game){
 function sendMove(event, x, y) {
   var data = { x: x, y: y, gameId: null, personID: null };
 
-  sendGenericAjaxRequest('/', data, 'POST', 'PUT', event, updateBoard);
+  sendGenericAjaxRequest('/', data, 'POST', 'PUT', event, htmlUpdatePieces);
 }
 
 //----------------------------------------------------------------------------------------
