@@ -43,30 +43,19 @@ for(var i = 0; i < game.rows; i++){
     $($tr).append($td);
   };
   $('#gameBoard').append($tr);
-  htmlUpdatePieces();
+  //htmlUpdatePieces();
 };
 //}
 
-function htmlUpdatePieces(){
-  //pseudocode:
-  //need to loop over the pieces array and grab their
-  //co-ordinates and their image filepaths. .piece is used
-  // to size them in CSS
-  var $ghost1 = ('<img class="piece" src="'+ filepath + '"/>');
-  $('#gameBoard' tr(data='y') td(data='x')).append($ghost1);
-  var $player = ('<img class="piece" src="'+ filepath + '"/>');
-  $('#gameBoard' tr(data='y') td(data='x')).append($player);
-  var $princess = ('<img class="piece" src="'+ filepath + '"/>');
-  $('#gameBoard' tr(data='y') td(data='x')).append($princess);
-  var $exit = ('<img class="piece" src="'+ filepath + '"/>');
-  $('#gameBoard' tr(data='y') td(data='x')).append($exit);
-  var $wormhole = ('<img class="piece" src="'+ filepath + '"/>');
-  $('#gameBoard' tr(data='y') td(data='x')).append($wormhole);
-  var $death = ('<img class="piece" src="'+ filepath + '"/>');
-  $('#gameBoard' tr(data='y') td(data='x')).append($death);
-  var $treasure = ('<img class="piece" src="'+ filepath + '"/>');
-  $('#gameBoard' tr(data='y') td(data='x')).append($treasure);
-}
+// function htmlUpdatePieces(){
+//   //pseudocode:
+//   //need to loop over the pieces array and grab their
+//   //co-ordinates and their image filepaths. .piece is used
+//   // to size them in CSS
+//   var $ghost1 = ('<img class="piece" src="'+ filepath + '"/>');
+//   $('#gameBoard' tr(data='y') td(data='x')).append($ghost1);
+
+// }
 //---------------------------------------------------------------//
 //---------------------------------------------------------------//
 //---------------------------------------------------------------//
