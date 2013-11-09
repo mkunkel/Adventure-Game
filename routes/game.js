@@ -32,18 +32,19 @@ exports.move = function(req, res){
   console.log('game.move'.italic.underline.bold.yellow);
 
 
-  res.send(req.body); // req.body contains {x:n, y:n, gameId:___, personId:___}, where n is -1, 0, or 1
-  Person.findById(req.body.id, function(err, person) {
-    person.position.x += req.body.x;
-    person.position.y += req.body.y;
-    checkCollisions(person.position.x, person.position.y, gameId);
+  Game.findById(req.body.id, function(err, game) {
+    game.person.position.x += req.body.x;
+    game.person.position.y += req.body.y;
+    checkCollisions(game.person.position.x, game.person.position.y, id);
+    game.save();
+    res.send(game); // req.body contains {x:n, y:n, id:___}, where n is -1, 0, or 1
   });
 
 }
 
 function checkCollisions(x, y, gameId) {
   var collisions = [];
-  Game.findById(gameId).populate('movingPieces').populate('stationaryPieces').exec(function(err, game){
+  Game.findById(gameId, function(err, game){
     for (var i = 0; i < game.movingPieces.length; i++) {
       if (game.movingPieces[i].position.x === x && game.movingPieces[i].position.y === y) {
         collisions.push(game.movingPieces[i]);
@@ -53,10 +54,8 @@ function checkCollisions(x, y, gameId) {
         collisions.push(game.stationaryPieces[i]);
       }
     }
-    Person.findById(game.person, function(err, person) {
-      for (var n = 0; n < collisions.length; n++) {
-        person.health += collisions[n].effect;
-      }
-    });
+    for (var n = 0; n < collisions.length; n++) {
+      game.person.health += collisions[n].effect;
+    }
   });
 }
