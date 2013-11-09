@@ -24,8 +24,6 @@ exports.create = function(req, res){
   new Game(req.body).save(function(err, game){
     //in callback pass the game object back to the browser
     game = hidePrincessAndGold(game);
-    console.log("Game before res.send");
-    console.log(game);
     res.send(game);
   });
 };

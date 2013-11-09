@@ -13,8 +13,6 @@ function initialize(){
 function startNewGame(e){
   // this is the form that posted
   submitAjaxForm(e, this, function(data, form){
-    console.log("GAME returning from startNewGame");
-    console.log(data);
     $('#formColumn').hide().removeClass('small-3');
     $('#headColumn').addClass('small-12').removeClass('small-9');
     buildGameBoard(data);
