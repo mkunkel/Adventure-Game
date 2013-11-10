@@ -26,6 +26,8 @@ function keyHandler(e) {
   // based on direction, sendMove(x, y)
   // on server, add these coords to current position
   // to determine new position
+
+  var personX = $('#person').closest()
   switch (key.toUpperCase()) {
   case 'Q': // Up/Left
     sendMove(e, -1, -1);
@@ -59,6 +61,7 @@ function keyHandler(e) {
 //-----------uncomment 'function' when model is ready------------//
 //---------------------------------------------------------------//
 function buildGameBoard(game){
+  $('#gameRow').show();
   for(var i = 0; i < game.rows; i++){
     var $tr = $('<tr></tr>').attr('data-y', i);
     for(var a = 0; a < game.columns; a++){
@@ -68,6 +71,7 @@ function buildGameBoard(game){
     $('#gameBoard').append($tr).data('id', game._id);
   }
   htmlPlacePieces(game);
+  htmlUpdateHealth(game.person.health);
 }
 
 function htmlPlacePieces(game){
@@ -90,15 +94,24 @@ function htmlPlacePieces(game){
     $piece.addClass(game.stationaryPieces[i].type);
     $square.append($piece);
   }
+  htmlUpdateHealth(game.person.health);
 }
 
 function htmlUpdatePieces(game) {
-  console.log(game);
+  // console.log(game);
   var $person = $('#person').detach();
   $('tr[data-y="' + game.person.position.y + '"] td[data-x="' + game.person.position.x + '"]').append($person);
   for (var i = 0; i < game.movingPieces.length; i++) {
     $(game.movingPieces[i].type).detach().append('tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]');
   }
+  htmlUpdateHealth(game.person.health);
+}
+
+function htmlUpdateHealth(health) {
+  var original = $('td').length;
+  // console.log(health / original);
+  $('#healthInner').css('width', ((health / original) * 100) + '%');
+  console.log($('#healthInner').css('width') + ', ' + health);
 }
 
 //---------------------------------------------------------------//
@@ -122,7 +135,7 @@ function sendMove(event, x, y) {
 
 function updateBoard(data) {
   // Gets called when server responds to sendMove
-  console.log(data);
+  // console.log(data);
 }
 
 
@@ -132,8 +145,8 @@ function updateBoard(data) {
 
 function submitAjaxForm(event, form, fn) {
   // debugger;
-  console.log(event);
-  console.log(form);
+  // console.log(event);
+  // console.log(form);
   var url = $(form).attr('action');
   var data = $(form).serialize();
 

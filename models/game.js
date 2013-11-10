@@ -46,7 +46,7 @@ Game.pre('save', function(next){
     var numberOfGhosts = Math.ceil((rows * columns) / 10);
     this.movingPieces.push(death, wormhole1, wormhole2);
     for(var z = 0; z < numberOfGhosts; z++){
-      var ghost = {type: 'ghost', position: {x: allBoardSquaresArray[z+7][0], y: allBoardSquaresArray[z+7][1]}};
+      var ghost = {type: 'ghost', position: {x: allBoardSquaresArray[z+7][0], y: allBoardSquaresArray[z+7][1]}, effect: -5};
       this.movingPieces.push(ghost);
     }
   }

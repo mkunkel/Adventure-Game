@@ -39,34 +39,37 @@ exports.move = function(req, res){
     game.person.position.x += parseInt(req.body.x, 10);
     game.person.position.y += parseInt(req.body.y, 10);
     console.log('after-' + game.person.position.x + ', ' + game.person.position.y);
-    // checkCollisions(game.person.position.x, game.person.position.y, game._id);
+    console.log('before ' + game.person.health);
+    game.person.health = checkCollisions(game.person.position.x, game.person.position.y, game) || game.person.health;
+    console.log('after ' +game.person.health);
     game.markModified('person');
     game.save(function(err, saveGame){
-      console.log(saveGame);
+      // console.log(saveGame);
       res.send(saveGame); // req.body contains {x:n, y:n, id:___}, where n is -1, 0, or 1
     });
   });
 
 }
 
-function checkCollisions(x, y, gameId) {
+function checkCollisions(x, y, game) {
   var collisions = [];
-  Game.findById(gameId, function(err, game){
-    for (var i = 0; i < game.movingPieces.length; i++) {
-      if (game.movingPieces[i].position.x === x && game.movingPieces[i].position.y === y) {
-        collisions.push(game.movingPieces[i]);
-      }
+  for (var i = 0; i < game.movingPieces.length; i++) {
+    if (game.movingPieces[i].position.x === x && game.movingPieces[i].position.y === y) {
+      collisions.push(game.movingPieces[i]);
     }
+  }
 
-    for (var a = 0; a < game.stationaryPieces.length; a++) {
-      if (game.stationaryPieces[a].position.x === x && game.stationaryPieces[a].position.y === y) {
-        collisions.push(game.stationaryPieces[a]);
-      }
+  for (var a = 0; a < game.stationaryPieces.length; a++) {
+    if (game.stationaryPieces[a].position.x === x && game.stationaryPieces[a].position.y === y) {
+      collisions.push(game.stationaryPieces[a]);
     }
-    for (var n = 0; n < collisions.length; n++) {
-      game.person.health += collisions[n].effect;
-    }
-  });
+  }
+  for (var n = 0; n < collisions.length; n++) {
+    console.log(collisions[n].effect);
+    game.person.health += collisions[n].effect;
+  }
+  console.log('return ' + game.person.health);
+  return game.person.health;
 }
 
 function hidePrincessAndGold(game){

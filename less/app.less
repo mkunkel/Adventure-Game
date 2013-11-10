@@ -55,7 +55,7 @@ h1{
   -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(strength = 5, Direction = 30, Color = '#000000')";
   #healthInner{
     height: 100%;
-    width: 80%;
+
     background-color: rgba(130, 50, 250, 0.6);
     border-radius: 10px;
     -moz-box-shadow: inset 5px 3px 15px #222222;
@@ -74,6 +74,10 @@ h1{
   margin-top: 10px;
   display: inline;
 }
+#gameRow {
+  display: none;
+}
+
 #gameBoard{
   height: auto;
   background-color: rgba(255, 255, 255, 0.1) !important;
@@ -83,11 +87,18 @@ h1{
     background-color: transparent;
     td{
       width: 100px;
+      position: relative;
       -moz-box-shadow: inset 5px 3px 15px @base - #222222;
       -webkit-box-shadow: inset 5px 3px 15px @base - #222222;
       box-shadow: inset 5px 3px 15px @base - #222222;
       filter: progid:DXImageTransform.Microsoft.Shadow(strength = 5, direction = 117, color = '#000000');
       -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(strength = 5, Direction = 117, Color = '#000000')";
+      img {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+      }
     }
   }
 }
