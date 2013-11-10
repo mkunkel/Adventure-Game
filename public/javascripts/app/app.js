@@ -152,10 +152,14 @@ function htmlUpdateBoard(game) {
   // Gets called when server responds to sendMove
   if(game.foundPrincess){
     $('#princessFound').prop('checked', true);
-  };
+  }
   if(game.foundTreasure){
     $('#treasureFound').prop('checked', true);
-  };
+  }
+  if(game.gameOver) {
+    $('#newGameForm').show();
+    $('#gameBoard').empty();
+  }
 }
 
 
