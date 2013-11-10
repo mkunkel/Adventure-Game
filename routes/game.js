@@ -32,18 +32,24 @@ exports.create = function(req, res){
 exports.move = function(req, res){
   console.log('game.move'.italic.underline.bold.yellow);
 
-
   Game.findById(req.body.id, function(err, game) {
     game.person.position.x += parseInt(req.body.x, 10);
     game.person.position.y += parseInt(req.body.y, 10);
-    // game.person.health = checkCollisions(game.person.position.x, game.person.position.y, game);
     game = checkCollisions(game.person.position.x, game.person.position.y, game);
+    // isGameEnding correctly assigns game.didWin and game.gameOver
     game = isGameEnding(game);
     game.markModified('person');
+<<<<<<< HEAD
     shuffleBoardSquaresArray(game.columns, game.rows);
     game.save(function(err, saveGame){
       saveGame = hidePrincessAndGold(saveGame);
       res.send(saveGame); // req.body contains {x:n, y:n, id:___}, where n is -1, 0, or 1
+=======
+    game.save(function(err, savedGame){
+      console.log(savedGame);
+      savedGame = hidePrincessAndGold(savedGame);
+      res.send(savedGame); // req.body contains {x:n, y:n, id:___}, where n is -1, 0, or 1
+>>>>>>> 8d13382d1a15815057e5d724aa4e0bbcf658f493
     });
   });
 }
@@ -124,6 +130,10 @@ function isGameEnding(game){
     game.gameOver = true;
   }
 
+  // if the game is over, determine whether won or lost (e.g. game.didWin)
+  if(game.gameOver === true){
+    game.didWin = (game.person.health > 0) && game.foundPrincess && game.foundTreasure;
+  }
+
   return game;
 }
-
