@@ -48,7 +48,6 @@ exports.move = function(req, res){
       res.send(saveGame); // req.body contains {x:n, y:n, id:___}, where n is -1, 0, or 1
     });
   });
-
 }
 
 function checkCollisions(x, y, game) {
