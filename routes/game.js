@@ -36,14 +36,15 @@ exports.move = function(req, res){
   Game.findById(req.body.id, function(err, game) {
     game.person.position.x += parseInt(req.body.x, 10);
     game.person.position.y += parseInt(req.body.y, 10);
-    game.person.health = checkCollisions(game.person.position.x, game.person.position.y, game);
+    // game.person.health = checkCollisions(game.person.position.x, game.person.position.y, game);
+    game = checkCollisions(game.person.position.x, game.person.position.y, game);
     if (game.person.health <= 0) {
       game.gameOver = true;
       game.didWin = false;
     }
     game.markModified('person');
     game.save(function(err, saveGame){
-      // console.log(saveGame);
+      console.log(saveGame);
       saveGame = hidePrincessAndGold(saveGame);
       res.send(saveGame); // req.body contains {x:n, y:n, id:___}, where n is -1, 0, or 1
     });
@@ -64,8 +65,9 @@ function checkCollisions(x, y, game) {
     }
   }
   for (var n = 0; n < collisions.length; n++) {
-    // console.log(collisions[n].effect);
+    // If it is a ghost subtract ghost.effect from health.
     if (collisions[n].effect) {game.person.health += collisions[n].effect;}
+
     switch(collisions[n].type) {
     case 'death':
       game.person.health = 0;
@@ -75,12 +77,18 @@ function checkCollisions(x, y, game) {
       break;
     case 'treasure':
       game.foundTreasure = true;
+      break;
+    case 'wormhole':
+      // give person a new random position when they move onto a wormhole.
+      game.person.position.x = Math.floor(Math.random() * game.columns);
+      game.person.position.y = Math.floor(Math.random() * game.rows);
+      break;
     }
 
     // console.log(collisions[n].type + ', ' + collisions[n].effect);
   }
   // console.log('return ' + game.person.health);
-  return game.person.health;
+  return game;
 }
 
 function hidePrincessAndGold(game){
