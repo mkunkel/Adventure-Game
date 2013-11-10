@@ -62,7 +62,7 @@ function keyHandler(e) {
 
 
 //---------------------------------------------------------------//
-//-----------uncomment 'function' when model is ready------------//
+//---------------------------------------------------------------//
 //---------------------------------------------------------------//
 function buildGameBoard(game){
   $('#gameRow').show();
@@ -98,11 +98,12 @@ function htmlPlacePieces(game){
     $piece.addClass(game.stationaryPieces[i].type);
     $square.append($piece);
   }
-  htmlUpdateHealth(game.person.health);
+  htmlUpdateHealth(game.person.health);//does this need to be called both here
+  //and at the end of the function that calls this function (buildGameBoard)?//
 }
 
 function htmlUpdatePieces(game) {
-  console.log(game);
+  console.log("Gabrielle's log of the htmlUpdatePieces function's version of game that is received: " + game);
   var $person = $('#person').detach();
   $('tr[data-y="' + game.person.position.y + '"] td[data-x="' + game.person.position.x + '"]').append($person);
   for (var i = 0; i < game.movingPieces.length; i++) {
@@ -119,6 +120,7 @@ function htmlUpdatePieces(game) {
   }
 
   htmlUpdateHealth(game.person.health);
+  htmlUpdateBoard(game);
 }
 
 function htmlUpdateHealth(health) {
@@ -147,9 +149,14 @@ function sendMove(event, x, y) {
 //----------------------------------------------------------------------------------------
 //------HTML-FUNCTIONS--------------------------------------------------------------------
 
-function updateBoard(data) {
+function htmlUpdateBoard(game) {
   // Gets called when server responds to sendMove
-  // console.log(data);
+  if(game.foundPrincess){
+    $('#princessFound').prop('checked', true);
+  };
+  if(game.foundTreasure){
+    $('#treasureFound').prop('checked', true);
+  };
 }
 
 
