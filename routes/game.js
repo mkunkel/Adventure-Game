@@ -43,6 +43,7 @@ exports.move = function(req, res){
       game.didWin = false;
     }
     game.markModified('person');
+    shuffleBoardSquaresArray(game.columns, game.rows);
     game.save(function(err, saveGame){
       console.log(saveGame);
       saveGame = hidePrincessAndGold(saveGame);
@@ -103,4 +104,15 @@ function hidePrincessAndGold(game){
     var treasure = _.remove(game.stationaryPieces, function(piece){return piece.type == 'treasure';});
   }
   return game;
+}
+
+function shuffleBoardSquaresArray(columns, rows){
+  var squaresArray = [];
+  for(var x = 0; x < columns; x++){
+    for(var y = 0; y < rows; y++){
+      squaresArray.push([x, y]);
+    }
+  }
+  squaresArray = _.shuffle(squaresArray);
+  return squaresArray;
 }
