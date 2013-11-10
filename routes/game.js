@@ -38,13 +38,9 @@ exports.move = function(req, res){
     game.person.position.y += parseInt(req.body.y, 10);
     // game.person.health = checkCollisions(game.person.position.x, game.person.position.y, game);
     game = checkCollisions(game.person.position.x, game.person.position.y, game);
-    if (game.person.health <= 0) {
-      game.gameOver = true;
-      game.didWin = false;
-    }
+    game = isGameEnding(game);
     game.markModified('person');
     game.save(function(err, saveGame){
-      console.log(saveGame);
       saveGame = hidePrincessAndGold(saveGame);
       res.send(saveGame); // req.body contains {x:n, y:n, id:___}, where n is -1, 0, or 1
     });
@@ -83,6 +79,10 @@ function checkCollisions(x, y, game) {
       game.person.position.x = Math.floor(Math.random() * game.columns);
       game.person.position.y = Math.floor(Math.random() * game.rows);
       break;
+    case 'exit':
+      // game.Gameover is assigned here for exit, and is assigned in isGameEnding for health
+      game.gameOver = true;
+      break;
     }
 
     // console.log(collisions[n].type + ', ' + collisions[n].effect);
@@ -102,5 +102,14 @@ function hidePrincessAndGold(game){
   if(!game.foundTreasure){
     var treasure = _.remove(game.stationaryPieces, function(piece){return piece.type == 'treasure';});
   }
+  return game;
+}
+
+function isGameEnding(game){
+  // game.Gameover is assigned here for health and it is assigned for landing on exit in the checkCollisions function
+  if (game.person.health <= 0) {
+    game.gameOver = true;
+  }
+
   return game;
 }
