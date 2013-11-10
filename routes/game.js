@@ -39,10 +39,17 @@ exports.move = function(req, res){
     // isGameEnding correctly assigns game.didWin and game.gameOver
     game = isGameEnding(game);
     game.markModified('person');
+<<<<<<< HEAD
+    shuffleBoardSquaresArray(game.columns, game.rows);
+    game.save(function(err, saveGame){
+      saveGame = hidePrincessAndGold(saveGame);
+      res.send(saveGame); // req.body contains {x:n, y:n, id:___}, where n is -1, 0, or 1
+=======
     game.save(function(err, savedGame){
       console.log(savedGame);
       savedGame = hidePrincessAndGold(savedGame);
       res.send(savedGame); // req.body contains {x:n, y:n, id:___}, where n is -1, 0, or 1
+>>>>>>> 8d13382d1a15815057e5d724aa4e0bbcf658f493
     });
   });
 }
@@ -105,6 +112,18 @@ function hidePrincessAndGold(game){
   return game;
 }
 
+
+function shuffleBoardSquaresArray(columns, rows){
+  var squaresArray = [];
+  for(var x = 0; x < columns; x++){
+    for(var y = 0; y < rows; y++){
+      squaresArray.push([x, y]);
+    }
+  }
+  squaresArray = _.shuffle(squaresArray);
+  return squaresArray;
+}
+
 function isGameEnding(game){
   // game.Gameover is assigned here for health and it is assigned for landing on exit in the checkCollisions function
   if (game.person.health <= 0) {
@@ -118,5 +137,3 @@ function isGameEnding(game){
 
   return game;
 }
-
-
