@@ -34,17 +34,17 @@ exports.move = function(req, res){
 
 
   Game.findById(req.body.id, function(err, game) {
-    console.log('before-' + game.person.position.x + ', ' + game.person.position.y);
-    console.log(req.body.x + ', ' + req.body.y);
     game.person.position.x += parseInt(req.body.x, 10);
     game.person.position.y += parseInt(req.body.y, 10);
-    console.log('after-' + game.person.position.x + ', ' + game.person.position.y);
-    console.log('before ' + game.person.health);
-    game.person.health = checkCollisions(game.person.position.x, game.person.position.y, game) || game.person.health;
-    console.log('after ' +game.person.health);
+    game.person.health = checkCollisions(game.person.position.x, game.person.position.y, game);
+    if (game.person.health <= 0) {
+      game.gameOver = true;
+      game.didWin = false;
+    }
     game.markModified('person');
     game.save(function(err, saveGame){
       // console.log(saveGame);
+      saveGame = hidePrincessAndGold(saveGame);
       res.send(saveGame); // req.body contains {x:n, y:n, id:___}, where n is -1, 0, or 1
     });
   });
@@ -64,10 +64,22 @@ function checkCollisions(x, y, game) {
     }
   }
   for (var n = 0; n < collisions.length; n++) {
-    console.log(collisions[n].effect);
-    game.person.health += collisions[n].effect;
+    // console.log(collisions[n].effect);
+    if (collisions[n].effect) {game.person.health += collisions[n].effect;}
+    switch(collisions[n].type) {
+    case 'death':
+      game.person.health = 0;
+      break;
+    case 'princess':
+      game.foundPrincess = true;
+      break;
+    case 'treasure':
+      game.foundTreasure = true;
+    }
+
+    // console.log(collisions[n].type + ', ' + collisions[n].effect);
   }
-  console.log('return ' + game.person.health);
+  // console.log('return ' + game.person.health);
   return game.person.health;
 }
 

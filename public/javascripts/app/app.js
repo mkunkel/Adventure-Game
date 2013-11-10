@@ -27,31 +27,35 @@ function keyHandler(e) {
   // on server, add these coords to current position
   // to determine new position
 
-  var personX = $('#person').closest()
+  var person = {};
+  person.x = $('#person').closest('td').data('x');
+  person.y = $('#person').closest('tr').data('y');
+  var rows = $('tr').length - 1;
+  var cols = ($('td').length / $('tr').length) - 1;
   switch (key.toUpperCase()) {
   case 'Q': // Up/Left
-    sendMove(e, -1, -1);
+    if (person.x > 0 && person.y > 0) {sendMove(e, -1, -1);}
     break;
   case 'W': // Up
-    sendMove(e, 0, -1);
+    if (person.y > 0) {sendMove(e, 0, -1);}
     break;
   case 'E': // Up/Right
-    sendMove(e, 1, -1);
+    if (person.x < cols && person.y > 0) {sendMove(e, 1, -1);}
     break;
   case 'A': // Left
-    sendMove(e, -1, 0);
+    if (person.x > 0) {sendMove(e, -1, 0);}
     break;
   case 'D': // Right
-    sendMove(e, 1, 0);
+    if (person.x < cols) {sendMove(e, 1, 0);}
     break;
   case 'Z': // Down/Left
-    sendMove(e, -1, 1);
+    if (person.x > 0 && person.y < rows) {sendMove(e, -1, 1);}
     break;
   case 'X': // Down
-    sendMove(e, 0, 1);
+    if (person.y < rows) {sendMove(e, 0, 1);}
     break;
   case 'C': // Down/Right
-    sendMove(e, 1, 1);
+    if (person.x < cols && person.y < rows) {sendMove(e, 1, 1);}
   }
   // console.log(key);
 }
@@ -98,12 +102,22 @@ function htmlPlacePieces(game){
 }
 
 function htmlUpdatePieces(game) {
-  // console.log(game);
+  console.log(game);
   var $person = $('#person').detach();
   $('tr[data-y="' + game.person.position.y + '"] td[data-x="' + game.person.position.x + '"]').append($person);
   for (var i = 0; i < game.movingPieces.length; i++) {
     $(game.movingPieces[i].type).detach().append('tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]');
   }
+
+  for(var i = 0; i < game.stationaryPieces.length; i++){
+    if (game.stationaryPieces[i].type === 'princess' || game.stationaryPieces[i].type === 'treasure') {
+      var $square = $('tr[data-y="' + game.stationaryPieces[i].position.y + '"] td[data-x="' + game.stationaryPieces[i].position.x + '"]');
+      var $piece = $('<img src="../images/' + game.stationaryPieces[i].type +'.png"/>').addClass('piece');
+      $piece.addClass(game.stationaryPieces[i].type);
+      $square.append($piece);
+    }
+  }
+
   htmlUpdateHealth(game.person.health);
 }
 
