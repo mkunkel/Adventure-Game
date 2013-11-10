@@ -37,7 +37,7 @@ h1{
  width: 500px;
  height: 100px;
  margin-top: 50px;
- background-color: rgba(255, 255, 255, 0.3) !important;
+ background-color: rgba(255, 255, 255, 0.3);
  padding: 10px;
  float: right;
  margin-right: 20px;
@@ -53,10 +53,19 @@ h1{
   box-shadow: 5px 3px 5px #222222;
   filter: progid:DXImageTransform.Microsoft.Shadow(strength = 5, direction = 30, color = '#000000');
   -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(strength = 5, Direction = 30, Color = '#000000')";
+  position: relative;
+  span {
+    position: relative;
+    top: 10px;
+    left: 15px;
+    color: white;
+  }
   #healthInner{
     height: 100%;
-
-    background-color: rgba(130, 50, 250, 0.6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(130, 50, 250, 0.5);
     border-radius: 10px;
     -moz-box-shadow: inset 5px 3px 15px #222222;
     -webkit-box-shadow: inset 5px 3px 15px #222222;
@@ -80,7 +89,7 @@ h1{
 
 #gameBoard{
   height: auto;
-  background-color: rgba(255, 255, 255, 0.1) !important;
+  background-color: rgba(255, 255, 255, 0.1);
   border: none;
   tr{
     height: 100px;
