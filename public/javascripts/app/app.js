@@ -103,7 +103,6 @@ function htmlPlacePieces(game){
 }
 
 function htmlUpdatePieces(game) {
-  console.log("Gabrielle's log of the htmlUpdatePieces function's version of game that is received: " + game);
   var $person = $('#person').detach();
   $('tr[data-y="' + game.person.position.y + '"] td[data-x="' + game.person.position.x + '"]').append($person);
   for (var i = 0; i < game.movingPieces.length; i++) {
