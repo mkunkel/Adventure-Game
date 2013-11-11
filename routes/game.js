@@ -107,7 +107,6 @@ function hidePrincessAndGold(game){
   return game;
 }
 
-//This function is basically from the model prehook - It's not working, maybe someone could take a look at it.
 
 function shuffleBoardSquaresArray(game){
   var columns = game.columns;
@@ -123,36 +122,10 @@ function shuffleBoardSquaresArray(game){
   for (var i = 0; i < game.movingPieces.length; i++) {
     game.movingPieces[i].position.x = squaresArray[i][0];
     game.movingPieces[i].position.y = squaresArray[i][1];
-    // console.log(game.movingPieces[i].type + ' - ' + game.movingPieces[i].position.x + ', ' + game.movingPieces[i].position.y);
   }
-
-  // var stationaryPositions = [];
-  // for(var i=0; i< game.stationaryPieces.length; i++){
-  //   var stationaryPosition = [game.stationaryPieces[i].position.x, game.stationaryPieces[i].position.y];
-  //   stationaryPositions.push(stationaryPosition);
-  // }
-
-  // for(var i = 0; i < stationaryPositions.length; i++){
-  //   var removePosition = _.find(squaresArray, function(){stationaryPositions[i];});
-  //     // console.log('outcome of looping = ' + removePosition);
-  // }
   return game;
 }
-  // console.log('whats in the db for array[0] x value if this code is right: ' + game.stationaryPieces[0].position.x);
 
-  // console.log('stationaryPositions array = ' + stationaryPositions);
-//   squaresArray = _.shuffle(squaresArray);
-//   _.findby
-//   var death = {type: 'death', position: {x: squaresArray[0][0], y: squaresArray[0][1]}};
-//   var wormhole1 = {type: 'wormhole', position: {x: squaresArray[0][2], y: squaresArray[1][0]}};
-//   var wormhole2 = {type: 'wormhole', position: {x: squaresArray[1][1], y: squaresArray[1][2]}};
-//   var numberOfGhosts = Math.ceil((rows * columns) / 10);
-//   game.movingPieces.push(death, wormhole1, wormhole2);
-//   for(var z = 0; z < numberOfGhosts; z++){
-//     var ghost = {type: 'ghost', position: {x: allBoardSquaresArray[z+7][0], y: allBoardSquaresArray[z+7][1]}, effect: -5};
-//     game.movingPieces.push(ghost);
-//   }
-// });
 
 function isGameEnding(game){
   // game.Gameover is assigned here for health and it is assigned for landing on exit in the checkCollisions function
