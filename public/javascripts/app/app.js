@@ -122,10 +122,8 @@ function htmlUpdatePieces(game) {
   for (var i = 0; i < game.movingPieces.length; i++) {
     // var newSelector = 'tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]';
     // htmlAnimateMove($(game.movingPieces[i].type), newSelector);
-    if (game.movingPieces[i].type === 'ghost') {
-      console.log(game.movingPieces[i].position.x + ', ' + game.movingPieces[i].position.y);
-    }
-    var $piece = $(game.movingPieces[i].type).detach();
+    console.log(game.movingPieces[i].type + ' - ' + game.movingPieces[i].position.x + ', ' + game.movingPieces[i].position.y);
+    var $piece = $('.' + game.movingPieces[i].type).detach();
     $('tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]').append($piece);
   }
 
