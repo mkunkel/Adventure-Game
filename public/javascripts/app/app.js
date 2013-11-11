@@ -122,9 +122,8 @@ function htmlUpdatePieces(game) {
   var ghost = 0;
   var wormhole = 0;
   var selector;
+  // $('.piece').addClass('toRemove');
   for (var i = 0; i < game.movingPieces.length; i++) {
-    // var newSelector = 'tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]';
-    // htmlAnimateMove($('.' + game.movingPieces[i].type), newSelector);
     // console.log(game.movingPieces[i].type + ' - ' + game.movingPieces[i].position.x + ', ' + game.movingPieces[i].position.y);
     if (game.movingPieces[i].type === 'ghost') {
       selector = $('.ghost')[ghost];
@@ -135,9 +134,11 @@ function htmlUpdatePieces(game) {
     } else {
       selector = '.' + game.movingPieces[i].type;
     }
-
-    var $piece = $(selector).detach();
-    $('tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]').append($piece);
+    var newSelector = 'tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]';
+    htmlAnimateMove($(selector), newSelector);
+    // $('.toRemove').remove();
+    // var $piece = $(selector).detach();
+    // $('tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]').append($piece);
   }
 
   for(var i = 0; i < game.stationaryPieces.length; i++){
@@ -157,27 +158,28 @@ function htmlAnimateMove($old, newPos) {
   // debugger;
   // var $old = $('#cell1 img');
   //First we copy the arrow to the new table cell and get the offset to the document
-  var $new = $old.clone().appendTo(newPos);
-  var newOffset = $new.offset();
+  // var $new = $old.clone().addClass('temp').appendTo(newPos);
+  var newOffset = $(newPos).offset();
+  // $new.remove();
   //Get the old position relative to document
   var oldOffset = $old.offset();
   //we also clone old to the document for the animation
-  var $temp = $old.clone().appendTo('body');
+  var $temp = $old.clone();
+  $temp.appendTo('body').css('left', oldOffset.left).css('top', oldOffset.top).css('position', 'absolute');
   //hide new and old and move $temp to position
   //also big z-index, make sure to edit this to something that works with the page
-  $temp
-    .css('position', 'absolute')
-    .css('left', oldOffset.left)
-    .css('top', oldOffset.top)
-    .css('zIndex', 1000);
-  $new.hide();
+
   $old.hide();
+  $(newPos).append($old.css('left', 0).css('top', 0));
+
   //animate the $temp to the position of the new img
+  console.log(newOffset, oldOffset);
   $temp.animate( {'top': newOffset.top, 'left':newOffset.left}, 'slow', function(){
     //callback function, we remove $old and $temp and show $new
-    $new.show();
-    $old.remove();
     $temp.remove();
+    $old.show();
+    // $old.appendTo(newPos).css('left', 0).css('top', 0);
+    // $old.remove();
   });
 }
 
@@ -221,6 +223,7 @@ function endTheGame(game){
   $('#headColumn').removeClass('small-12').addClass('small-9');
   $('#formColumn').addClass('small-3');
   $('#formColumn').show();
+  $('input[name=playerName').focus();
 
   //display Won or Lost message
   var message = '<h1 class="small-12 columns"></h1>';
