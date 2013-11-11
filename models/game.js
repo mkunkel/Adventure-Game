@@ -50,7 +50,7 @@ Game.pre('save', function(next){
       this.movingPieces.push(ghost);
     }
   }
-
+  this.allBoardSquaresArray.push(allBoardSquaresArray);
   next();
 });
 
