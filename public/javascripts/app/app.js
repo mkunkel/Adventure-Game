@@ -13,8 +13,18 @@ function initialize(){
 function startNewGame(e){
   // this is the form that posted
   submitAjaxForm(e, this, function(data, form){
+    //clear contents of user form
+    $('input[name=playerName]').val('');
+    $('input[name=rows]').val('');
+    $('input[name=columns]').val('');
+
+    //hide last game's win or loss message
+    $('#winLoseMessage').remove();
+
+    //hide user form, adjust header columns
     $('#formColumn').hide().removeClass('small-3');
     $('#headColumn').addClass('small-12').removeClass('small-9');
+
     buildGameBoard(data);
   });
 }
@@ -74,6 +84,10 @@ function buildGameBoard(game){
     }
     $('#gameBoard').append($tr).data('id', game._id);
   }
+
+  $('#healthOuter').show();
+  $('#checkboxes').show();
+
   htmlPlacePieces(game);
   htmlUpdateHealth(game.person.health);
 }
@@ -126,7 +140,6 @@ function htmlUpdateHealth(health) {
   var original = $('td').length;
   // console.log(health / original);
   $('#healthInner').css('width', ((health / original) * 100) + '%');
-  console.log($('#healthInner').css('width') + ', ' + health);
 }
 
 //---------------------------------------------------------------//
@@ -153,10 +166,28 @@ function isGameOver(game){
 }
 
 function endTheGame(game){
-  alert('Game is over.');
-  console.log(game);
+  // remove board squares, hide health bar, checkboxes.
   $('#gameBoard').children().remove();
-  $('#gameRow').hide();
+  $('#healthOuter').hide();
+  $('#princessFound, #treasureFound').prop('checked', false); // will uncheck the checkbox with id check1
+  $('#checkboxes').hide();
+
+  // show New Game form
+  $('#headColumn').removeClass('small-12').addClass('small-9');
+  $('#formColumn').addClass('small-3');
+  $('#formColumn').show();
+
+  //display Won or Lost message
+  var message = '<h1 class="small-12 columns"></h1>';
+  var $message = $(message);
+  if(game.didWin){
+    $message.text('Congratulations, you won!');
+  } else {
+    $message.text('You lost, better luck next time.');
+  }
+  var $row = $('<div class="row" id="winLoseMessage"></div>');
+  $row.append($message);
+  $('body').append($row);
 }
 
 //----------------------------------------------------------------------------------------
