@@ -148,9 +148,15 @@ function isGameOver(game){
   if(!game.gameOver){
     htmlUpdatePieces(game);
   } else {
-    alert('Game is over.');
-    console.log(game);
+    endTheGame(game);
   }
+}
+
+function endTheGame(game){
+  alert('Game is over.');
+  console.log(game);
+  $('#gameBoard').children().remove();
+  $('#gameRow').hide();
 }
 
 //----------------------------------------------------------------------------------------
@@ -165,10 +171,7 @@ function htmlUpdateBoard(game) {
   if(game.foundTreasure){
     $('#treasureFound').prop('checked', true);
   }
-  if(game.gameOver) {
-    $('#newGameForm').show();
-    $('#gameBoard').empty();
-  }
+  // gameOver is checked in isGameOver function.
 }
 
 
