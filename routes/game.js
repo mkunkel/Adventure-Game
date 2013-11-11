@@ -38,8 +38,9 @@ exports.move = function(req, res){
     game = checkCollisions(game.person.position.x, game.person.position.y, game);
     // isGameEnding correctly assigns game.didWin and game.gameOver
     game = isGameEnding(game);
-    game.markModified('person');
     shuffleBoardSquaresArray(game);  // trying to call the function below to randomize pieces
+    game.markModified('person');
+    game.markModified('movingPieces');
     game.save(function(err, saveGame){
       saveGame = hidePrincessAndGold(saveGame);
       res.send(saveGame); // req.body contains {x:n, y:n, id:___}, where n is -1, 0, or 1
@@ -117,16 +118,23 @@ function shuffleBoardSquaresArray(game){
       squaresArray.push([x, y]);
     }
   }
-  var stationaryPositions = [];
-  for(var i=0; i< game.stationaryPieces.length; i++){
-    var stationaryPosition = [game.stationaryPieces[i].position.x, game.stationaryPieces[i].position.y];
-    stationaryPositions.push(stationaryPosition);
+
+  for (var i = 0; i < game.movingPieces.length; i++) {
+    game.movingPieces[i].position.x = squaresArray[i][0];
+    game.movingPieces[i].position.y = squaresArray[i][1];
   }
 
-  for(var i = 0; i < stationaryPositions.length; i++){
-    var removePosition = _.find(squaresArray, function(){stationaryPositions[i];});
-      console.log('outcome of looping = ' + removePosition);
-  }
+  // var stationaryPositions = [];
+  // for(var i=0; i< game.stationaryPieces.length; i++){
+  //   var stationaryPosition = [game.stationaryPieces[i].position.x, game.stationaryPieces[i].position.y];
+  //   stationaryPositions.push(stationaryPosition);
+  // }
+
+  // for(var i = 0; i < stationaryPositions.length; i++){
+  //   var removePosition = _.find(squaresArray, function(){stationaryPositions[i];});
+  //     // console.log('outcome of looping = ' + removePosition);
+  // }
+  return game;
 }
   // console.log('whats in the db for array[0] x value if this code is right: ' + game.stationaryPieces[0].position.x);
 

@@ -120,8 +120,8 @@ function htmlUpdatePieces(game) {
   var $person = $('#person').detach();
   $('tr[data-y="' + game.person.position.y + '"] td[data-x="' + game.person.position.x + '"]').append($person);
   for (var i = 0; i < game.movingPieces.length; i++) {
-    htmlAnimateMove($(game.movingPieces[i].type));
-    // $(game.movingPieces[i].type).detach().append('tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]');
+    // htmlAnimateMove($(game.movingPieces[i].type));
+    $(game.movingPieces[i].type).detach().append('tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]');
   }
 
   for(var i = 0; i < game.stationaryPieces.length; i++){
