@@ -124,6 +124,7 @@ function shuffleBoardSquaresArray(game){
     stationaryPosition.y = game.stationaryPieces[i].y;
     stationaryPositions.push(stationaryPosition);
   }
+  console.log('whats in the db for array[0] x value if this code is right: ' + game.stationaryPieces[0].x);
   console.log('stationaryPositions array = ' + stationaryPositions);
 //   squaresArray = _.shuffle(squaresArray);
 //   _.findby
