@@ -119,7 +119,7 @@ function shuffleBoardSquaresArray(game){
   }
   var stationaryPositions = [];
   for(var i=0; i< game.stationaryPieces.length; i++){
-    var stationaryPosition = [game.stationaryPieces[i].x, stationaryPosition.y = game.stationaryPieces[i].y];
+    var stationaryPosition = [game.stationaryPieces[i].x, game.stationaryPieces[i].y];
     stationaryPositions.push(stationaryPosition);
   }
 
