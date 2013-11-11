@@ -123,9 +123,14 @@ function shuffleBoardSquaresArray(game){
     stationaryPositions.push(stationaryPosition);
   }
 
-  console.log('whats in the db for array[0] x value if this code is right: ' + game.stationaryPieces[0].position.x);
+  for(var i = 0; i < stationaryPositions.length; i++){
+    var removePosition = _.find(squaresArray, function(){stationaryPositions[i];});
+      console.log('outcome of looping = ' + removePosition);
+  }
+}
+  // console.log('whats in the db for array[0] x value if this code is right: ' + game.stationaryPieces[0].position.x);
 
-  console.log('stationaryPositions array = ' + stationaryPositions);
+  // console.log('stationaryPositions array = ' + stationaryPositions);
 //   squaresArray = _.shuffle(squaresArray);
 //   _.findby
 //   var death = {type: 'death', position: {x: squaresArray[0][0], y: squaresArray[0][1]}};
@@ -137,7 +142,6 @@ function shuffleBoardSquaresArray(game){
 //     var ghost = {type: 'ghost', position: {x: allBoardSquaresArray[z+7][0], y: allBoardSquaresArray[z+7][1]}, effect: -5};
 //     game.movingPieces.push(ghost);
 //   }
-}
 // });
 
 function isGameEnding(game){
