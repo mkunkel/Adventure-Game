@@ -119,11 +119,24 @@ function htmlPlacePieces(game){
 function htmlUpdatePieces(game) {
   var $person = $('#person').detach();
   $('tr[data-y="' + game.person.position.y + '"] td[data-x="' + game.person.position.x + '"]').append($person);
+  var ghost = 0;
+  var wormhole = 0;
+  var selector;
   for (var i = 0; i < game.movingPieces.length; i++) {
     // var newSelector = 'tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]';
-    // htmlAnimateMove($(game.movingPieces[i].type), newSelector);
-    console.log(game.movingPieces[i].type + ' - ' + game.movingPieces[i].position.x + ', ' + game.movingPieces[i].position.y);
-    var $piece = $('.' + game.movingPieces[i].type).detach();
+    // htmlAnimateMove($('.' + game.movingPieces[i].type), newSelector);
+    // console.log(game.movingPieces[i].type + ' - ' + game.movingPieces[i].position.x + ', ' + game.movingPieces[i].position.y);
+    if (game.movingPieces[i].type === 'ghost') {
+      selector = $('.ghost')[ghost];
+      ghost += 1;
+    } else if (game.movingPieces[i].type === 'wormhole') {
+      selector = $('.wormhole')[wormhole];
+      wormhole += 1;
+    } else {
+      selector = '.' + game.movingPieces[i].type;
+    }
+
+    var $piece = $(selector).detach();
     $('tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]').append($piece);
   }
 
