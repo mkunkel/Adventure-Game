@@ -141,7 +141,22 @@ function htmlUpdateHealth(health) {
 function sendMove(event, x, y) {
   var data = { x: x, y: y, id: $('#gameBoard').data('id')};
 
-  sendGenericAjaxRequest('/', data, 'POST', 'PUT', event, htmlUpdatePieces);
+  sendGenericAjaxRequest('/', data, 'POST', 'PUT', event, isGameOver);
+}
+
+function isGameOver(game){
+  if(!game.gameOver){
+    htmlUpdatePieces(game);
+  } else {
+    endTheGame(game);
+  }
+}
+
+function endTheGame(game){
+  alert('Game is over.');
+  console.log(game);
+  $('#gameBoard').children().remove();
+  $('#gameRow').hide();
 }
 
 //----------------------------------------------------------------------------------------
@@ -152,10 +167,11 @@ function htmlUpdateBoard(game) {
   // Gets called when server responds to sendMove
   if(game.foundPrincess){
     $('#princessFound').prop('checked', true);
-  };
+  }
   if(game.foundTreasure){
     $('#treasureFound').prop('checked', true);
-  };
+  }
+  // gameOver is checked in isGameOver function.
 }
 
 
