@@ -119,11 +119,11 @@ function shuffleBoardSquaresArray(game){
   }
   var stationaryPositions = [];
   for(var i=0; i< game.stationaryPieces.length; i++){
-    var stationaryPosition = [game.stationaryPieces[i].x, game.stationaryPieces[i].y];
+    var stationaryPosition = [game.stationaryPieces[i].position.x, game.stationaryPieces[i].position.y];
     stationaryPositions.push(stationaryPosition);
   }
 
-  console.log('whats in the db for array[0] x value if this code is right: ' + game.stationaryPieces[0].x);
+  console.log('whats in the db for array[0] x value if this code is right: ' + game.stationaryPieces[0].position.x);
 
   console.log('stationaryPositions array = ' + stationaryPositions);
 //   squaresArray = _.shuffle(squaresArray);
