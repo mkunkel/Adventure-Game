@@ -51,6 +51,10 @@ Game.pre('save', function(next){
     }
   }
 
+  for (var i = 0; i < this.movingPieces.length; i++) {
+    console.log(this.movingPieces[i].type + ' - ' + this.movingPieces[i].position.x + ', ' + this.movingPieces[i].position.y);
+  }
+
   next();
 });
 

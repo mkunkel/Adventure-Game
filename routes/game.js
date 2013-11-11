@@ -118,11 +118,11 @@ function shuffleBoardSquaresArray(game){
       squaresArray.push([x, y]);
     }
   }
-
+  squaresArray = _.shuffle(squaresArray);
   for (var i = 0; i < game.movingPieces.length; i++) {
     game.movingPieces[i].position.x = squaresArray[i][0];
     game.movingPieces[i].position.y = squaresArray[i][1];
-    console.log(game.movingPieces[i].type + ' - ' + game.movingPieces[i].position.x + ', ' + game.movingPieces[i].position.y);
+    // console.log(game.movingPieces[i].type + ' - ' + game.movingPieces[i].position.x + ', ' + game.movingPieces[i].position.y);
   }
 
   // var stationaryPositions = [];
