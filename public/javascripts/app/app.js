@@ -120,8 +120,13 @@ function htmlUpdatePieces(game) {
   var $person = $('#person').detach();
   $('tr[data-y="' + game.person.position.y + '"] td[data-x="' + game.person.position.x + '"]').append($person);
   for (var i = 0; i < game.movingPieces.length; i++) {
-    // htmlAnimateMove($(game.movingPieces[i].type));
-    $(game.movingPieces[i].type).detach().append('tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]');
+    // var newSelector = 'tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]';
+    // htmlAnimateMove($(game.movingPieces[i].type), newSelector);
+    if (game.movingPieces[i].type === 'ghost') {
+      console.log(game.movingPieces[i].position.x + ', ' + game.movingPieces[i].position.y);
+    }
+    var $piece = $(game.movingPieces[i].type).detach();
+    $('tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]').append($piece);
   }
 
   for(var i = 0; i < game.stationaryPieces.length; i++){
@@ -137,10 +142,11 @@ function htmlUpdatePieces(game) {
   htmlUpdateBoard(game);
 }
 
-function htmlAnimateMove($old) {
+function htmlAnimateMove($old, newPos) {
+  // debugger;
   // var $old = $('#cell1 img');
   //First we copy the arrow to the new table cell and get the offset to the document
-  var $new = $old.clone().appendTo('#cell2');
+  var $new = $old.clone().appendTo(newPos);
   var newOffset = $new.offset();
   //Get the old position relative to document
   var oldOffset = $old.offset();

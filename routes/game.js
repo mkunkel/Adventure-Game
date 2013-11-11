@@ -38,7 +38,7 @@ exports.move = function(req, res){
     game = checkCollisions(game.person.position.x, game.person.position.y, game);
     // isGameEnding correctly assigns game.didWin and game.gameOver
     game = isGameEnding(game);
-    shuffleBoardSquaresArray(game);  // trying to call the function below to randomize pieces
+    game = shuffleBoardSquaresArray(game);  // trying to call the function below to randomize pieces
     game.markModified('person');
     game.markModified('movingPieces');
     game.save(function(err, saveGame){
@@ -122,6 +122,7 @@ function shuffleBoardSquaresArray(game){
   for (var i = 0; i < game.movingPieces.length; i++) {
     game.movingPieces[i].position.x = squaresArray[i][0];
     game.movingPieces[i].position.y = squaresArray[i][1];
+    console.log(game.movingPieces[i].type + ' - ' + game.movingPieces[i].position.x + ', ' + game.movingPieces[i].position.y);
   }
 
   // var stationaryPositions = [];
