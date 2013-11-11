@@ -120,7 +120,8 @@ function htmlUpdatePieces(game) {
   var $person = $('#person').detach();
   $('tr[data-y="' + game.person.position.y + '"] td[data-x="' + game.person.position.x + '"]').append($person);
   for (var i = 0; i < game.movingPieces.length; i++) {
-    $(game.movingPieces[i].type).detach().append('tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]');
+    htmlAnimateMove($(game.movingPieces[i].type));
+    // $(game.movingPieces[i].type).detach().append('tr[data-y="' + game.movingPieces[i].position.y + '"] td[data-x="' + game.movingPieces[i].position.x + '"]');
   }
 
   for(var i = 0; i < game.stationaryPieces.length; i++){
@@ -134,6 +135,33 @@ function htmlUpdatePieces(game) {
 
   htmlUpdateHealth(game.person.health);
   htmlUpdateBoard(game);
+}
+
+function htmlAnimateMove($old) {
+  // var $old = $('#cell1 img');
+  //First we copy the arrow to the new table cell and get the offset to the document
+  var $new = $old.clone().appendTo('#cell2');
+  var newOffset = $new.offset();
+  //Get the old position relative to document
+  var oldOffset = $old.offset();
+  //we also clone old to the document for the animation
+  var $temp = $old.clone().appendTo('body');
+  //hide new and old and move $temp to position
+  //also big z-index, make sure to edit this to something that works with the page
+  $temp
+    .css('position', 'absolute')
+    .css('left', oldOffset.left)
+    .css('top', oldOffset.top)
+    .css('zIndex', 1000);
+  $new.hide();
+  $old.hide();
+  //animate the $temp to the position of the new img
+  $temp.animate( {'top': newOffset.top, 'left':newOffset.left}, 'slow', function(){
+    //callback function, we remove $old and $temp and show $new
+    $new.show();
+    $old.remove();
+    $temp.remove();
+  });
 }
 
 function htmlUpdateHealth(health) {
