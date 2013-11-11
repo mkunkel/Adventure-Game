@@ -37,8 +37,9 @@ exports.move = function(req, res){
     game.person.position.y += parseInt(req.body.y, 10);
     game = checkCollisions(game.person.position.x, game.person.position.y, game);
     // isGameEnding correctly assigns game.didWin and game.gameOver
-    game = isGameEnding(game);
     game = shuffleBoardSquaresArray(game);  // trying to call the function below to randomize pieces
+    game = checkCollisions(game.person.position.x, game.person.position.y, game);
+    game = isGameEnding(game);
     game.markModified('person');
     game.markModified('movingPieces');
     game.save(function(err, saveGame){
