@@ -118,13 +118,13 @@ function shuffleBoardSquaresArray(game){
     }
   }
   var stationaryPositions = [];
-  for(var i=0; i<3; i++){
-    var stationaryPosition = [];
-    stationaryPosition.x = game.stationaryPieces[i].x;
-    stationaryPosition.y = game.stationaryPieces[i].y;
+  for(var i=0; i< game.stationaryPieces.length; i++){
+    var stationaryPosition = [game.stationaryPieces[i].x, game.stationaryPieces[i].y];
     stationaryPositions.push(stationaryPosition);
   }
+
   console.log('whats in the db for array[0] x value if this code is right: ' + game.stationaryPieces[0].x);
+
   console.log('stationaryPositions array = ' + stationaryPositions);
 //   squaresArray = _.shuffle(squaresArray);
 //   _.findby
