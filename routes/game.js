@@ -39,7 +39,7 @@ exports.move = function(req, res){
     // isGameEnding correctly assigns game.didWin and game.gameOver
     game = isGameEnding(game);
     game.markModified('person');
-    // shuffleBoardSquaresArray(game.columns, game.rows);  // trying to call the function below to randomize pieces
+    shuffleBoardSquaresArray(game);  // trying to call the function below to randomize pieces
     game.save(function(err, saveGame){
       saveGame = hidePrincessAndGold(saveGame);
       res.send(saveGame); // req.body contains {x:n, y:n, id:___}, where n is -1, 0, or 1
@@ -107,28 +107,37 @@ function hidePrincessAndGold(game){
 
 //This function is basically from the model prehook - It's not working, maybe someone could take a look at it.
 
-// function shuffleBoardSquaresArray(game.columns, game.rows){
-//   var columns = game.columns;
-//   var rows = game.rows;
+function shuffleBoardSquaresArray(game){
+  var columns = game.columns;
+  var rows = game.rows;
 
-//   var squaresArray = [];
-//   for(var x = 0; x < columns; x++){
-//     for(var y = 0; y < rows; y++){
-//       squaresArray.push([x, y]);
-//     }
-//   }
+  var squaresArray = [];
+  for(var x = 0; x < columns; x++){
+    for(var y = 0; y < rows; y++){
+      squaresArray.push([x, y]);
+    }
+  }
+  var stationaryPositions = [];
+  for(var i=0; i<3; i++){
+    var stationaryPosition = [];
+    stationaryPosition.x = game.stationaryPieces[i].x;
+    stationaryPosition.y = game.stationaryPieces[i].y;
+    stationaryPositions.push(stationaryPosition);
+  }
+  console.log('stationaryPositions array = ' + stationaryPositions);
 //   squaresArray = _.shuffle(squaresArray);
-
-//   var death = {type: 'death', position: {x: squaresArray[4][0], y: squaresArray[4][1]}};
-//   var wormhole1 = {type: 'wormhole', position: {x: squaresArray[5][0], y: squaresArray[5][1]}};
-//   var wormhole2 = {type: 'wormhole', position: {x: squaresArray[6][0], y: squaresArray[6][1]}};
+//   _.findby
+//   var death = {type: 'death', position: {x: squaresArray[0][0], y: squaresArray[0][1]}};
+//   var wormhole1 = {type: 'wormhole', position: {x: squaresArray[0][2], y: squaresArray[1][0]}};
+//   var wormhole2 = {type: 'wormhole', position: {x: squaresArray[1][1], y: squaresArray[1][2]}};
 //   var numberOfGhosts = Math.ceil((rows * columns) / 10);
-//   this.movingPieces.push(death, wormhole1, wormhole2);
+//   game.movingPieces.push(death, wormhole1, wormhole2);
 //   for(var z = 0; z < numberOfGhosts; z++){
 //     var ghost = {type: 'ghost', position: {x: allBoardSquaresArray[z+7][0], y: allBoardSquaresArray[z+7][1]}, effect: -5};
-//     this.movingPieces.push(ghost);
+//     game.movingPieces.push(ghost);
 //   }
-// }
+}
+// });
 
 function isGameEnding(game){
   // game.Gameover is assigned here for health and it is assigned for landing on exit in the checkCollisions function
