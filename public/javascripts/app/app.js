@@ -176,8 +176,8 @@ function htmlAnimateMove($old, newPos) {
   console.log(newOffset, oldOffset);
   $temp.animate( {'top': newOffset.top, 'left':newOffset.left}, 'slow', function(){
     //callback function, we remove $old and $temp and show $new
-    $temp.remove();
     $old.show();
+    $temp.remove();
     // $old.appendTo(newPos).css('left', 0).css('top', 0);
     // $old.remove();
   });
