@@ -6,15 +6,16 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "*",
-    "jade": "*",
-    "express-less": "*",
-    "lodash": "*",
-    "moment": "*",
+    "async": "0.2.10",
+    "colors": "0.6.2",
+    "express": "3.4.8",
+    "express-less": "0.0.8",
+    "favicon": "0.0.2",
+    "jade": "1.1.5",
+    "lodash": "2.4.1",
+    "moment": "1.0.0",
     "mongoose": "*",
-    "async": "*",
-    "colors": "*",
-    "request": "*",
-    "socket.io": "*"
+    "request": "2.34.0",
+    "socket.io": "0.9.14"
   }
 }

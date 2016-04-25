@@ -21,6 +21,7 @@ exports.index = function(req, res){
 exports.create = function(req, res){
   // req.body is { playerName: 'Tommy', columns: '4', rows: '8' }
   //Need to create and save a new game in database
+    console.log(req.body)
   new Game(req.body).save(function(err, game){
     //in callback pass the game object back to the browser
     game = hidePrincessAndGold(game);
@@ -97,6 +98,7 @@ function hidePrincessAndGold(game){
   // This function checks to see whether princess and treasure have been found.
   // If they have not been found, they are removed from the game object passed back
   // to the browser (so that they will not be displayed on the gameboard.)
+
   if(!game.foundPrincess){
     var princess = _.remove(game.stationaryPieces, function(piece){return piece.type == 'princess';});
   }

@@ -3,7 +3,7 @@ $(document).ready(initialize);
 function initialize(){
   $(document).foundation();
   $('html').on('keydown', keyHandler);
-  $('form#newGameForm').on('submit', startNewGame);
+  $('form').on('submit', startNewGame);
 }
 
 //----------------------------------------------------------------------------------------
@@ -12,6 +12,7 @@ function initialize(){
 
 function startNewGame(e){
   // this is the form that posted
+  e.preventDefault();
   submitAjaxForm(e, this, function(data, form){
     //clear contents of user form
     $('input[name=playerName]').val('');
